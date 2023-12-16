@@ -12,27 +12,18 @@ const _sfc_main = {
       pageCurrent: 1,
       // 数据总量
       total: 0,
-      loading: false
+      loading: false,
+      showDetail: false,
+      showReceive: false
     };
   },
   onLoad() {
-    this.selectedIndexs = [];
     this.getData(1);
   },
   methods: {
-    // 多选处理
-    selectedItems() {
-      return this.selectedIndexs.map((i) => this.tableData[i]);
-    },
-    // 多选
-    selectionChange(e) {
-      console.log(e.detail.index);
-      this.selectedIndexs = e.detail.index;
-    },
     // 分页触发
     change(e) {
       this.$refs.table.clearSelection();
-      this.selectedIndexs.length = 0;
       this.getData(e.current);
     },
     // 搜索
@@ -106,43 +97,42 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       placeholder: "维护任务查询"
     }),
     b: common_vendor.p({
-      width: "150",
+      width: "100",
       align: "center"
     }),
     c: common_vendor.p({
-      width: "150",
+      width: "80",
       align: "center"
     }),
     d: common_vendor.p({
+      width: "150",
       align: "center"
     }),
-    e: common_vendor.p({
-      width: "204",
-      align: "center"
-    }),
-    f: common_vendor.f($data.tableData, (item, index, i0) => {
+    e: common_vendor.f($data.tableData, (item, index, i0) => {
       return {
-        a: common_vendor.t(item.date),
-        b: "6d1a1907-9-" + i0 + "," + ("6d1a1907-8-" + i0),
-        c: common_vendor.t(item.name),
-        d: "6d1a1907-10-" + i0 + "," + ("6d1a1907-8-" + i0),
-        e: common_vendor.t(item.address),
-        f: "6d1a1907-11-" + i0 + "," + ("6d1a1907-8-" + i0),
-        g: "6d1a1907-12-" + i0 + "," + ("6d1a1907-8-" + i0),
-        h: index,
-        i: "6d1a1907-8-" + i0 + ",6d1a1907-2"
+        a: common_vendor.t(item.taskName),
+        b: "6d1a1907-8-" + i0 + "," + ("6d1a1907-7-" + i0),
+        c: common_vendor.t(item.maintainType),
+        d: "6d1a1907-9-" + i0 + "," + ("6d1a1907-7-" + i0),
+        e: "6d1a1907-10-" + i0 + "," + ("6d1a1907-7-" + i0),
+        f: index,
+        g: "6d1a1907-7-" + i0 + ",6d1a1907-2"
       };
+    }),
+    f: common_vendor.p({
+      align: "center"
     }),
     g: common_vendor.p({
       align: "center"
     }),
-    h: common_vendor.sr("table", "6d1a1907-2,6d1a1907-1"),
-    i: common_vendor.o($options.selectionChange),
+    h: common_vendor.p({
+      align: "center"
+    }),
+    i: common_vendor.sr("table", "6d1a1907-2,6d1a1907-1"),
     j: common_vendor.p({
       loading: $data.loading,
       border: true,
       stripe: true,
-      type: "selection",
       emptyText: "暂无更多数据"
     }),
     k: common_vendor.o($options.change),

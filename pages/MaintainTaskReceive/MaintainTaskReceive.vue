@@ -5,31 +5,28 @@
 	</view>
 	<uni-section title="维护任务表" type="line">
 		<view class="uni-container">
-			<uni-table ref="table" :loading="loading" border stripe type="selection" emptyText="暂无更多数据" @selection-change="selectionChange">
+			<uni-table ref="table" :loading="loading" border stripe emptyText="暂无更多数据" >
 				<uni-tr>
-					<uni-th width="150" align="center">日期</uni-th>
-					<uni-th width="150" align="center">姓名</uni-th>
-					<uni-th align="center">地址</uni-th>
-					<uni-th width="204" align="center">设置</uni-th>
+					<uni-th width="100" align="center">维护任务</uni-th>
+					<uni-th width="80" align="center">维护类型</uni-th>
+					<uni-th width="150" align="center">设置</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in tableData" :key="index">
-					<uni-td>{{ item.date }}</uni-td>
-					<uni-td>
-						<view class="name">{{ item.name }}</view>
-					</uni-td>
-					<uni-td align="center">{{ item.address }}</uni-td>
-					<uni-td>
-						<view class="uni-group">
-							<button class="uni-button" size="mini" type="primary">修改</button>
-							<button class="uni-button" size="mini" type="warn">删除</button>
+					<uni-td align="center">{{ item.taskName }}</uni-td>
+					<uni-td align="center">{{ item.maintainType }}</uni-td>
+					<uni-td align="center">
+						<view class="uni-group" style="display: flex;">
+							<button class="uni-button" size="mini" type="primary"  >详情</button>
+							<button class="uni-button" size="mini" type="primary" style="margin-left: 3px;" >认领</button>
 						</view>
 					</uni-td>
 				</uni-tr>
 			</uni-table>
 			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
 		</view>
-		
 	</uni-section>
+<!-- 	<u-modal :show="showDetail"></u-modal>
+	<u-modal :show="showReceive"></u-modal> -->
 </template>
 
 <script>
@@ -45,27 +42,18 @@
 				pageCurrent: 1,
 				// 数据总量
 				total: 0,
-				loading: false
+				loading: false,
+				showDetail: false,
+				showReceive:false
 			}
 		},
 		onLoad() {
-			this.selectedIndexs = []
 			this.getData(1)
 		},
 		methods: {
-			// 多选处理
-			selectedItems() {
-				return this.selectedIndexs.map(i => this.tableData[i])
-			},
-			// 多选
-			selectionChange(e) {
-				console.log(e.detail.index)
-				this.selectedIndexs = e.detail.index
-			},
 			// 分页触发
 			change(e) {
 				this.$refs.table.clearSelection()
-				this.selectedIndexs.length = 0
 				this.getData(e.current)
 			},
 			// 搜索
