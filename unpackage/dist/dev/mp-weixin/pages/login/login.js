@@ -14,7 +14,9 @@ const _sfc_main = {
         password: [
           { required: true, message: "密码必填", trigger: "blur" }
         ]
-      }
+      },
+      test: [0],
+      testList: [{ "value": 0, "text": "测试" }]
     };
   },
   onReady() {
@@ -23,6 +25,14 @@ const _sfc_main = {
   methods: {
     submit() {
       let self = this;
+      if (this.test.length > 0) {
+        console.log("test");
+        this.$store.commit("login", {});
+        common_vendor.index.switchTab({
+          url: "/pages/MaintainTaskReceive/MaintainTaskReceive"
+        });
+        return;
+      }
       self.$ajax.postjson("/user/login", {
         loginName: self.user.userName,
         password: self.user.password
@@ -50,13 +60,15 @@ if (!Array) {
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
   const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
   const _easycom_uni_forms2 = common_vendor.resolveComponent("uni-forms");
-  (_easycom_uni_easyinput2 + _easycom_uni_forms_item2 + _easycom_uni_forms2)();
+  const _easycom_uni_data_checkbox2 = common_vendor.resolveComponent("uni-data-checkbox");
+  (_easycom_uni_easyinput2 + _easycom_uni_forms_item2 + _easycom_uni_forms2 + _easycom_uni_data_checkbox2)();
 }
 const _easycom_uni_easyinput = () => "../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.js";
 const _easycom_uni_forms_item = () => "../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.js";
 const _easycom_uni_forms = () => "../../uni_modules/uni-forms/components/uni-forms/uni-forms.js";
+const _easycom_uni_data_checkbox = () => "../../uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.js";
 if (!Math) {
-  (_easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms)();
+  (_easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms + _easycom_uni_data_checkbox)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -84,7 +96,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     h: common_vendor.p({
       modelValue: $data.user
     }),
-    i: common_vendor.o((...args) => $options.submit && $options.submit(...args))
+    i: common_vendor.o(($event) => $data.test = $event),
+    j: common_vendor.p({
+      multiple: true,
+      localdata: $data.testList,
+      modelValue: $data.test
+    }),
+    k: common_vendor.o((...args) => $options.submit && $options.submit(...args))
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "G:/Codes/WaterSupply/wechatApp/wechat/pages/login/login.vue"]]);

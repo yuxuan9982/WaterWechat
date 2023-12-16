@@ -2,13 +2,30 @@
   "pages": [
     "pages/login/login",
     "pages/index/index",
-    "pages/MaintainTaskReceive/MaintainTaskReceive"
+    "pages/MaintainTaskReceive/MaintainTaskReceive",
+    "pages/test/test"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/MaintainTaskReceive/MaintainTaskReceive",
+        "iconPath": "static/任务领取池.png",
+        "selectedIconPath": "static/任务领取池.png",
+        "text": "任务领取"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png",
+        "text": "index"
+      }
+    ]
   },
   "usingComponents": {}
 }

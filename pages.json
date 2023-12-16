@@ -18,6 +18,14 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/test/test",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
@@ -28,5 +36,20 @@
 		"app-plus": {
 			"background": "#efeff4"
 		}
+	},
+	"tabBar": {
+		"list": [
+			{
+				"pagePath": "pages/MaintainTaskReceive/MaintainTaskReceive",
+				"iconPath": "static/任务领取池.png",
+				"selectedIconPath": "static/任务领取池.png",
+				"text": "任务领取"
+			},{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/logo.png",
+				"selectedIconPath": "static/logo.png",
+				"text": "index"
+			}
+		]
 	}
 }

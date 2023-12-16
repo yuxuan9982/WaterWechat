@@ -8,6 +8,7 @@
 				<uni-easyinput v-model="user.password" placeholder="请输入密码"></uni-easyinput>
 			</uni-forms-item>
 		</uni-forms>
+		<uni-data-checkbox multiple v-model="test" :localdata="testList"></uni-data-checkbox>
 		<button class="button" @click="submit" style="background-color: #2D8CF0;color: white;">登陆</button>
 	</view>
 </template>
@@ -26,7 +27,9 @@ export default {
 				password: [
 					{ required: true, message: '密码必填', trigger: 'blur' },
 				]
-			}
+			},
+			test:[0],
+			testList:[{"value": 0,"text": "测试"	}],
 		}
 	},
 	onReady() {
@@ -36,6 +39,14 @@ export default {
 	methods: {
 		submit() {
 			let self = this;
+			if(this.test.length>0){
+				console.log("test")
+				this.$store.commit("login", {});
+				uni.switchTab({
+					url:'/pages/MaintainTaskReceive/MaintainTaskReceive'
+				});
+				return ;
+			}
 			self.$ajax
 			.postjson("/user/login", {
 			  loginName: self.user.userName,
@@ -54,6 +65,9 @@ export default {
 				console.log(user);
 				this.$store.commit("login", user);
 				console.log("登录成功·");
+				// uni.switchTab({
+				// 	url:'/pages/MaintainTaskReceive/MaintainTaskReceive'
+				// });
 			  } else {
 				console.log("登录失败，请检查用户名和密码!");
 			  }
