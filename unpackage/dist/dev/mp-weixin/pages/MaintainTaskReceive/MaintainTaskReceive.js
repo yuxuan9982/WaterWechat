@@ -26,17 +26,19 @@ const _sfc_main = {
         {
           name: "维护项目1",
           content: "设备清洁"
+        },
+        {
+          name: "维护项目2",
+          content: "设备故障维护"
+        },
+        {
+          name: "维护项目3",
+          content: "维护内容3"
+        },
+        {
+          name: "维护项目4",
+          content: "维护内容4"
         }
-        // },{
-        //   name:'维护项目2',
-        //   content:'设备故障维护',
-        // },{
-        //   name:'维护项目3',
-        //   content:'维护内容3',
-        // },{
-        //   name:'维护项目4',
-        //   content:'维护内容4',
-        // }
       ]
     };
   },
@@ -97,6 +99,15 @@ const _sfc_main = {
     },
     confirm1() {
       this.showDetail = false;
+    },
+    clickReceive() {
+      this.showReceive = true;
+    },
+    confirm2() {
+      this.showReceive = false;
+    },
+    cancel2() {
+      this.showReceive = false;
     }
   }
 };
@@ -152,9 +163,10 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         c: common_vendor.t(item.maintainType),
         d: "6d1a1907-9-" + i0 + "," + ("6d1a1907-7-" + i0),
         e: common_vendor.o((...args) => $options.clickDetail && $options.clickDetail(...args), index),
-        f: "6d1a1907-10-" + i0 + "," + ("6d1a1907-7-" + i0),
-        g: index,
-        h: "6d1a1907-7-" + i0 + ",6d1a1907-2"
+        f: common_vendor.o((...args) => $options.clickReceive && $options.clickReceive(...args), index),
+        g: "6d1a1907-10-" + i0 + "," + ("6d1a1907-7-" + i0),
+        h: index,
+        i: "6d1a1907-7-" + i0 + ",6d1a1907-2"
       };
     }),
     f: common_vendor.p({
@@ -200,60 +212,63 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     s: common_vendor.p({
       label: "客户"
     }),
-    t: common_vendor.p({
-      label: "维护项目列表"
-    }),
-    v: common_vendor.p({
-      width: "100",
-      align: "center"
-    }),
+    t: common_vendor.o($options.change),
+    v: common_vendor.o(($event) => $data.maintainTypes = $event),
     w: common_vendor.p({
-      width: "100",
-      align: "center"
-    }),
-    x: common_vendor.f($data.maintainListData, (item, index, i0) => {
-      return {
-        a: common_vendor.t(item.name),
-        b: "6d1a1907-24-" + i0 + "," + ("6d1a1907-23-" + i0),
-        c: common_vendor.t(item.content),
-        d: "6d1a1907-25-" + i0 + "," + ("6d1a1907-23-" + i0),
-        e: index,
-        f: "6d1a1907-23-" + i0 + ",6d1a1907-19"
-      };
-    }),
-    y: common_vendor.p({
-      align: "center"
-    }),
-    z: common_vendor.p({
-      align: "center"
-    }),
-    A: common_vendor.p({
-      border: true,
-      stripe: true,
-      emptyText: "暂无更多数据"
-    }),
-    B: common_vendor.o($options.change),
-    C: common_vendor.o(($event) => $data.maintainTypes = $event),
-    D: common_vendor.p({
       localdata: $data.maintainTypesData,
       modelValue: $data.maintainTypes
     }),
-    E: common_vendor.p({
+    x: common_vendor.p({
       label: "维护类型"
+    }),
+    y: common_vendor.p({
+      label: "维护项目列表"
+    }),
+    z: common_vendor.p({
+      width: "300rpx",
+      align: "center"
+    }),
+    A: common_vendor.p({
+      width: "300rpx",
+      align: "center"
+    }),
+    B: common_vendor.f($data.maintainListData, (item, index, i0) => {
+      return {
+        a: common_vendor.t(item.name),
+        b: "6d1a1907-26-" + i0 + "," + ("6d1a1907-25-" + i0),
+        c: common_vendor.t(item.content),
+        d: "6d1a1907-27-" + i0 + "," + ("6d1a1907-25-" + i0),
+        e: index,
+        f: "6d1a1907-25-" + i0 + ",6d1a1907-21"
+      };
+    }),
+    C: common_vendor.p({
+      align: "center"
+    }),
+    D: common_vendor.p({
+      align: "center"
+    }),
+    E: common_vendor.p({
+      border: true,
+      stripe: true
     }),
     F: common_vendor.sr("form", "6d1a1907-13,6d1a1907-12"),
     G: common_vendor.p({
-      modelValue: $data.MaintainTask
+      modelValue: $data.MaintainTask,
+      ["label-width"]: "100px"
     }),
     H: common_vendor.o($options.confirm1),
     I: common_vendor.p({
       show: $data.showDetail,
       title: "维护任务详情",
-      width: "90%"
+      width: "700rpx"
     }),
-    J: common_vendor.p({
+    J: common_vendor.o($options.confirm2),
+    K: common_vendor.o($options.cancel2),
+    L: common_vendor.p({
       show: $data.showReceive,
-      title: "维护任务领取"
+      title: "维护任务领取",
+      showCancelButton: "true"
     })
   };
 }

@@ -17,7 +17,7 @@
 					<uni-td align="center">
 						<view class="uni-group" style="display: flex;">
 							<button class="uni-button" size="mini" type="primary" @click="clickDetail" >详情</button>
-							<button class="uni-button" size="mini" type="primary" style="margin-left: 3px;" >认领</button>
+							<button class="uni-button" size="mini" type="primary" style="margin-left: 3px;" @click="clickReceive">认领</button>
 						</view>
 					</uni-td>
 				</uni-tr>
@@ -25,32 +25,36 @@
 			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
 		</view>
 	</uni-section>
-	<u-modal :show="showDetail" title="维护任务详情" @confirm="confirm1" width="90%">
-		<uni-forms ref="form" :modelValue="MaintainTask" >
-			<uni-forms-item label="维护任务">
+	<u-modal :show="showDetail" title="维护任务详情" @confirm="confirm1" width="700rpx">
+		<view class="uni-container">
+		<uni-forms ref="form" :modelValue="MaintainTask" label-width="100px">
+			<uni-forms-item label="维护任务" key="customerName">
 				<uni-easyinput disabled  v-model="MaintainTask.taskName" ></uni-easyinput>
 			</uni-forms-item>	
 			<uni-forms-item label="客户">
 				<uni-easyinput disabled  v-model="MaintainTask.customerName" ></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item label="维护项目列表"></uni-forms-item>
-			<uni-table  border stripe emptyText="暂无更多数据" >
+			<uni-forms-item label="维护类型" >
+				<uni-data-checkbox v-model="maintainTypes" :localdata="maintainTypesData" @change="change"></uni-data-checkbox>
+			</uni-forms-item>	
+			<uni-forms-item label="维护项目列表" ></uni-forms-item>
+			<uni-table  border stripe >
 				<uni-tr>
-					<uni-th width="100" align="center">维护项目</uni-th>
-					<uni-th width="100" align="center">维护项目内容</uni-th>
+					<uni-th width="300rpx" align="center">维护项目</uni-th>
+					<uni-th width="300rpx" align="center">维护项目内容</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in maintainListData" :key="index">
 					<uni-td align="center">{{ item.name }}</uni-td>
 					<uni-td align="center">{{ item.content }}</uni-td>
 				</uni-tr>
 			</uni-table>
-			<uni-forms-item label="维护类型">
-				<uni-data-checkbox v-model="maintainTypes" :localdata="maintainTypesData" @change="change"></uni-data-checkbox>
-			</uni-forms-item>
 			
 		</uni-forms>
+		</view>
 	</u-modal>
-	<u-modal :show="showReceive" title="维护任务领取"></u-modal>
+	<u-modal :show="showReceive" title="维护任务领取" @confirm="confirm2" @cancel="cancel2" showCancelButton="true">
+		
+	</u-modal>
 </template>
 
 <script>
@@ -79,17 +83,17 @@
 				maintainListData:[
 					{
 					  name:'维护项目1',
-					  content:'设备清洁',}
-					// },{
-					//   name:'维护项目2',
-					//   content:'设备故障维护',
-					// },{
-					//   name:'维护项目3',
-					//   content:'维护内容3',
-					// },{
-					//   name:'维护项目4',
-					//   content:'维护内容4',
-					// }
+					  content:'设备清洁',
+					},{
+					  name:'维护项目2',
+					  content:'设备故障维护',
+					},{
+					  name:'维护项目3',
+					  content:'维护内容3',
+					},{
+					  name:'维护项目4',
+					  content:'维护内容4',
+					},
 				],
 			}
 		},
@@ -151,6 +155,12 @@
 				this.showDetail=true;
 			},confirm1(){
 				this.showDetail=false;
+			},clickReceive(){
+				this.showReceive=true;
+			},confirm2(){
+				this.showReceive=false;
+			},cancel2(){
+				this.showReceive=false;
 			}
 		}
 	}
