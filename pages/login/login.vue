@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
 		<uni-forms ref="form" :modelValue="user">
-			<uni-forms-item label="账号" required name="userName">
+			<uni-forms-item label="账号" required name="userName" >
 				<uni-easyinput v-model="user.userName" placeholder="请输入账号"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item label="密码" required name="password">
-				<uni-easyinput v-model="user.password" placeholder="请输入密码"></uni-easyinput>
+				<uni-easyinput type="password" v-model="user.password" placeholder="请输入密码"></uni-easyinput>
 			</uni-forms-item>
 		</uni-forms>
 		<uni-data-checkbox multiple v-model="test" :localdata="testList"></uni-data-checkbox>
@@ -79,9 +79,11 @@ export default {
 <style>
 	.container {
 		padding: 20px;
-		font-size: 14px;
-		line-height: 24px;
 		justify-content: center;
 		align-items: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center; /* 在主轴上居中对齐 */
+		justify-content: center; /* 在交叉轴上居中对齐 */
 	}
 </style>

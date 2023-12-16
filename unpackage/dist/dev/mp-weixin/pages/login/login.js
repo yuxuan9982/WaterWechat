@@ -84,6 +84,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     d: common_vendor.o(($event) => $data.user.password = $event),
     e: common_vendor.p({
+      type: "password",
       placeholder: "请输入密码",
       modelValue: $data.user.password
     }),

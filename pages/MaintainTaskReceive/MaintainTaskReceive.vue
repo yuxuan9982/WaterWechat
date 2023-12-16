@@ -16,7 +16,7 @@
 					<uni-td align="center">{{ item.maintainType }}</uni-td>
 					<uni-td align="center">
 						<view class="uni-group" style="display: flex;">
-							<button class="uni-button" size="mini" type="primary"  >详情</button>
+							<button class="uni-button" size="mini" type="primary" @click="clickDetail" >详情</button>
 							<button class="uni-button" size="mini" type="primary" style="margin-left: 3px;" >认领</button>
 						</view>
 					</uni-td>
@@ -25,8 +25,32 @@
 			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
 		</view>
 	</uni-section>
-<!-- 	<u-modal :show="showDetail"></u-modal>
-	<u-modal :show="showReceive"></u-modal> -->
+	<u-modal :show="showDetail" title="维护任务详情" @confirm="confirm1" width="90%">
+		<uni-forms ref="form" :modelValue="MaintainTask" >
+			<uni-forms-item label="维护任务">
+				<uni-easyinput disabled  v-model="MaintainTask.taskName" ></uni-easyinput>
+			</uni-forms-item>	
+			<uni-forms-item label="客户">
+				<uni-easyinput disabled  v-model="MaintainTask.customerName" ></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item label="维护项目列表"></uni-forms-item>
+			<uni-table  border stripe emptyText="暂无更多数据" >
+				<uni-tr>
+					<uni-th width="100" align="center">维护项目</uni-th>
+					<uni-th width="100" align="center">维护项目内容</uni-th>
+				</uni-tr>
+				<uni-tr v-for="(item, index) in maintainListData" :key="index">
+					<uni-td align="center">{{ item.name }}</uni-td>
+					<uni-td align="center">{{ item.content }}</uni-td>
+				</uni-tr>
+			</uni-table>
+			<uni-forms-item label="维护类型">
+				<uni-data-checkbox v-model="maintainTypes" :localdata="maintainTypesData" @change="change"></uni-data-checkbox>
+			</uni-forms-item>
+			
+		</uni-forms>
+	</u-modal>
+	<u-modal :show="showReceive" title="维护任务领取"></u-modal>
 </template>
 
 <script>
@@ -44,7 +68,29 @@
 				total: 0,
 				loading: false,
 				showDetail: false,
-				showReceive:false
+				showReceive:false,
+				MaintainTask:{
+					taskName:"1",
+					customerName:"2",
+					maintainType:"3"
+				},
+				maintainTypes:0,
+				maintainTypesData:[{"value": 0,"text": "线上","disable":true	},{"value": 1,"text": "线下","disable":true}],
+				maintainListData:[
+					{
+					  name:'维护项目1',
+					  content:'设备清洁',}
+					// },{
+					//   name:'维护项目2',
+					//   content:'设备故障维护',
+					// },{
+					//   name:'维护项目3',
+					//   content:'维护内容3',
+					// },{
+					//   name:'维护项目4',
+					//   content:'维护内容4',
+					// }
+				],
 			}
 		},
 		onLoad() {
@@ -100,6 +146,11 @@
 							total: total
 						})
 						}, 500)
+			},
+			clickDetail(){
+				this.showDetail=true;
+			},confirm1(){
+				this.showDetail=false;
 			}
 		}
 	}

@@ -21,10 +21,12 @@ import { createSSRApp } from 'vue'
 import App from './App.vue'
 import ajax from "./services/ajax.js"
 import store from "./services/store.js"
+import uviewPlus from '@/uni_modules/uview-plus'
 export function createApp() {
   const app = createSSRApp(App)
   app.config.globalProperties.$ajax = ajax
   app.use(store)
+  app.use(uviewPlus)
   return {
     app
   }
