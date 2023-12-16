@@ -1,0 +1,32 @@
+/* 水平间距 */
+/* 水平间距 */
+.zb-table-header.data-v-cb3e3a28 {
+  overflow: hidden;
+  background: #fafafa;
+}
+.zb-table-header .item-th.data-v-cb3e3a28 {
+  padding-left: 8px;
+  line-height: 39px;
+  height: 40px;
+  box-sizing: border-box;
+}
+.item-tr.data-v-cb3e3a28 {
+  display: flex;
+  box-sizing: border-box;
+}
+.item-td.data-v-cb3e3a28 {
+  flex-shrink: 0;
+  width: 100px;
+  padding-left: 8px;
+  height: 40px;
+  line-height: 40px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  border-bottom: 1px solid #e8e8e8;
+  background: #fafafa;
+}

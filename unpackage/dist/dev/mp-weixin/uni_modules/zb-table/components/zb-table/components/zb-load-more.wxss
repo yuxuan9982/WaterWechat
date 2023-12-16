@@ -1,0 +1,30 @@
+/* 水平间距 */
+/* 水平间距 */
+.zb-load-more.data-v-597f0331 {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  background: white;
+  display: flex;
+  height: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+.zb-load-more .loading-custom-image.data-v-597f0331 {
+  color: #a4a4a4;
+  margin-right: 8rpx;
+  width: 24px;
+  height: 24px;
+  animation: loading-circle-597f0331 1s linear infinite;
+}
+@keyframes loading-circle-597f0331 {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}

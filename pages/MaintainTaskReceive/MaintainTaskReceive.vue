@@ -5,7 +5,7 @@
 	</view>
 	<uni-section title="维护任务表" type="line">
 		<view class="uni-container">
-			<uni-table ref="table" :loading="loading" border stripe emptyText="暂无更多数据" >
+			<!-- <uni-table ref="table" :loading="loading" border stripe emptyText="暂无更多数据" >
 				<uni-tr>
 					<uni-th width="100" align="center">维护任务</uni-th>
 					<uni-th width="80" align="center">维护类型</uni-th>
@@ -21,7 +21,8 @@
 						</view>
 					</uni-td>
 				</uni-tr>
-			</uni-table>
+			</uni-table > -->
+			<zb-table ref="table" :border="true" :stripe="true" :columns="column1" :data="tableData" @dele="dele" @edit="buttonEdit"></zb-table>
 			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
 		</view>
 	</uni-section>
@@ -35,7 +36,7 @@
 				<uni-easyinput disabled  v-model="MaintainTask.customerName" ></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item label="维护类型" >
-				<uni-data-checkbox v-model="maintainTypes" :localdata="maintainTypesData" @change="change"></uni-data-checkbox>
+				<uni-data-checkbox v-model="maintainTypes" :localdata="maintainTypesData"></uni-data-checkbox>
 			</uni-forms-item>	
 			<uni-forms-item label="维护项目列表" ></uni-forms-item>
 			<uni-table  border stripe >
@@ -94,6 +95,25 @@
 					  name:'维护项目4',
 					  content:'维护内容4',
 					},
+				],
+				column1:[
+				    { type:'index', width:60 },
+				    { name: 'taskName', label: '维护任务',width:80},
+				    { name: 'maintainType', label: '维护类型',},
+					{ name: 'operation', type:'operation',label: '操作',renders:[
+						  {
+							name:'编辑',
+							class:'edit',
+							type:"primary",
+							func:'edit' // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
+						  },
+						  {
+							name:'删除',
+							type:'warn', // type 为custom的时候自定义按钮
+							class:"del",
+							func:'dele',
+						  },
+					]},
 				],
 			}
 		},
@@ -161,6 +181,26 @@
 				this.showReceive=false;
 			},cancel2(){
 				this.showReceive=false;
+			},dele(ite,index){
+				uni.showToast({
+				  icon:'none',
+				  duration:3000,
+				  title:'点击删除'
+				})
+				// alert('点击删除')
+				console.log(ite,index)
+				this.showReceive=true;
+			  },buttonEdit(ite,index){
+				uni.showToast({
+				  icon:'none',
+				  duration:3000,
+				  title:'点击编辑'
+				})
+				console.log(ite,index);
+				this.MaintainTask.taskName=ite.taskName;
+				this.MaintainTask.maintainType=ite.maintainType;
+				this.MaintainTask.customerName=ite.customerName;
+				this.showDetail=true;
 			}
 		}
 	}

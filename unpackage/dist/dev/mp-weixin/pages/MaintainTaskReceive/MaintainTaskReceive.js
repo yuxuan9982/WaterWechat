@@ -1,6 +1,6 @@
 "use strict";
-const pages_MaintainTaskReceive_tableData = require("./tableData.js");
 const common_vendor = require("../../common/vendor.js");
+const pages_MaintainTaskReceive_tableData = require("./tableData.js");
 const _sfc_main = {
   data() {
     return {
@@ -39,6 +39,27 @@ const _sfc_main = {
           name: "维护项目4",
           content: "维护内容4"
         }
+      ],
+      column1: [
+        { type: "index", width: 60 },
+        { name: "taskName", label: "维护任务", width: 80 },
+        { name: "maintainType", label: "维护类型" },
+        { name: "operation", type: "operation", label: "操作", renders: [
+          {
+            name: "编辑",
+            class: "edit",
+            type: "primary",
+            func: "edit"
+            // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
+          },
+          {
+            name: "删除",
+            type: "warn",
+            // type 为custom的时候自定义按钮
+            class: "del",
+            func: "dele"
+          }
+        ] }
       ]
     };
   },
@@ -108,164 +129,154 @@ const _sfc_main = {
     },
     cancel2() {
       this.showReceive = false;
+    },
+    dele(ite, index) {
+      common_vendor.index.showToast({
+        icon: "none",
+        duration: 3e3,
+        title: "点击删除"
+      });
+      console.log(ite, index);
+      this.showReceive = true;
+    },
+    buttonEdit(ite, index) {
+      common_vendor.index.showToast({
+        icon: "none",
+        duration: 3e3,
+        title: "点击编辑"
+      });
+      console.log(ite, index);
+      this.MaintainTask.taskName = ite.taskName;
+      this.MaintainTask.maintainType = ite.maintainType;
+      this.MaintainTask.customerName = ite.customerName;
+      this.showDetail = true;
     }
   }
 };
 if (!Array) {
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
-  const _easycom_uni_th2 = common_vendor.resolveComponent("uni-th");
-  const _easycom_uni_tr2 = common_vendor.resolveComponent("uni-tr");
-  const _easycom_uni_td2 = common_vendor.resolveComponent("uni-td");
-  const _easycom_uni_table2 = common_vendor.resolveComponent("uni-table");
+  const _easycom_zb_table2 = common_vendor.resolveComponent("zb-table");
   const _easycom_uni_pagination2 = common_vendor.resolveComponent("uni-pagination");
   const _easycom_uni_section2 = common_vendor.resolveComponent("uni-section");
   const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
   const _easycom_uni_data_checkbox2 = common_vendor.resolveComponent("uni-data-checkbox");
+  const _easycom_uni_th2 = common_vendor.resolveComponent("uni-th");
+  const _easycom_uni_tr2 = common_vendor.resolveComponent("uni-tr");
+  const _easycom_uni_td2 = common_vendor.resolveComponent("uni-td");
+  const _easycom_uni_table2 = common_vendor.resolveComponent("uni-table");
   const _easycom_uni_forms2 = common_vendor.resolveComponent("uni-forms");
   const _easycom_u_modal2 = common_vendor.resolveComponent("u-modal");
-  (_easycom_uni_easyinput2 + _easycom_uni_th2 + _easycom_uni_tr2 + _easycom_uni_td2 + _easycom_uni_table2 + _easycom_uni_pagination2 + _easycom_uni_section2 + _easycom_uni_forms_item2 + _easycom_uni_data_checkbox2 + _easycom_uni_forms2 + _easycom_u_modal2)();
+  (_easycom_uni_easyinput2 + _easycom_zb_table2 + _easycom_uni_pagination2 + _easycom_uni_section2 + _easycom_uni_forms_item2 + _easycom_uni_data_checkbox2 + _easycom_uni_th2 + _easycom_uni_tr2 + _easycom_uni_td2 + _easycom_uni_table2 + _easycom_uni_forms2 + _easycom_u_modal2)();
 }
 const _easycom_uni_easyinput = () => "../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.js";
-const _easycom_uni_th = () => "../../uni_modules/uni-table/components/uni-th/uni-th.js";
-const _easycom_uni_tr = () => "../../uni_modules/uni-table/components/uni-tr/uni-tr.js";
-const _easycom_uni_td = () => "../../uni_modules/uni-table/components/uni-td/uni-td.js";
-const _easycom_uni_table = () => "../../uni_modules/uni-table/components/uni-table/uni-table.js";
+const _easycom_zb_table = () => "../../uni_modules/zb-table/components/zb-table/zb-table.js";
 const _easycom_uni_pagination = () => "../../uni_modules/uni-pagination/components/uni-pagination/uni-pagination.js";
 const _easycom_uni_section = () => "../../uni_modules/uni-section/components/uni-section/uni-section.js";
 const _easycom_uni_forms_item = () => "../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.js";
 const _easycom_uni_data_checkbox = () => "../../uni_modules/uni-data-checkbox/components/uni-data-checkbox/uni-data-checkbox.js";
+const _easycom_uni_th = () => "../../uni_modules/uni-table/components/uni-th/uni-th.js";
+const _easycom_uni_tr = () => "../../uni_modules/uni-table/components/uni-tr/uni-tr.js";
+const _easycom_uni_td = () => "../../uni_modules/uni-table/components/uni-td/uni-td.js";
+const _easycom_uni_table = () => "../../uni_modules/uni-table/components/uni-table/uni-table.js";
 const _easycom_uni_forms = () => "../../uni_modules/uni-forms/components/uni-forms/uni-forms.js";
 const _easycom_u_modal = () => "../../uni_modules/uview-plus/components/u-modal/u-modal.js";
 if (!Math) {
-  (_easycom_uni_easyinput + _easycom_uni_th + _easycom_uni_tr + _easycom_uni_td + _easycom_uni_table + _easycom_uni_pagination + _easycom_uni_section + _easycom_uni_forms_item + _easycom_uni_data_checkbox + _easycom_uni_forms + _easycom_u_modal)();
+  (_easycom_uni_easyinput + _easycom_zb_table + _easycom_uni_pagination + _easycom_uni_section + _easycom_uni_forms_item + _easycom_uni_data_checkbox + _easycom_uni_th + _easycom_uni_tr + _easycom_uni_td + _easycom_uni_table + _easycom_uni_forms + _easycom_u_modal)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
     a: common_vendor.p({
       placeholder: "维护任务查询"
     }),
-    b: common_vendor.p({
-      width: "100",
-      align: "center"
-    }),
-    c: common_vendor.p({
-      width: "80",
-      align: "center"
-    }),
-    d: common_vendor.p({
-      width: "150",
-      align: "center"
-    }),
-    e: common_vendor.f($data.tableData, (item, index, i0) => {
-      return {
-        a: common_vendor.t(item.taskName),
-        b: "6d1a1907-8-" + i0 + "," + ("6d1a1907-7-" + i0),
-        c: common_vendor.t(item.maintainType),
-        d: "6d1a1907-9-" + i0 + "," + ("6d1a1907-7-" + i0),
-        e: common_vendor.o((...args) => $options.clickDetail && $options.clickDetail(...args), index),
-        f: common_vendor.o((...args) => $options.clickReceive && $options.clickReceive(...args), index),
-        g: "6d1a1907-10-" + i0 + "," + ("6d1a1907-7-" + i0),
-        h: index,
-        i: "6d1a1907-7-" + i0 + ",6d1a1907-2"
-      };
-    }),
-    f: common_vendor.p({
-      align: "center"
-    }),
-    g: common_vendor.p({
-      align: "center"
-    }),
-    h: common_vendor.p({
-      align: "center"
-    }),
-    i: common_vendor.sr("table", "6d1a1907-2,6d1a1907-1"),
-    j: common_vendor.p({
-      loading: $data.loading,
+    b: common_vendor.sr("table", "6d1a1907-2,6d1a1907-1"),
+    c: common_vendor.o($options.dele),
+    d: common_vendor.o($options.buttonEdit),
+    e: common_vendor.p({
       border: true,
       stripe: true,
-      emptyText: "暂无更多数据"
+      columns: $data.column1,
+      data: $data.tableData
     }),
-    k: common_vendor.o($options.change),
-    l: common_vendor.p({
+    f: common_vendor.o($options.change),
+    g: common_vendor.p({
       ["show-icon"]: true,
       ["page-size"]: $data.pageSize,
       current: $data.pageCurrent,
       total: $data.total
     }),
-    m: common_vendor.p({
+    h: common_vendor.p({
       title: "维护任务表",
       type: "line"
     }),
-    n: common_vendor.o(($event) => $data.MaintainTask.taskName = $event),
-    o: common_vendor.p({
+    i: common_vendor.o(($event) => $data.MaintainTask.taskName = $event),
+    j: common_vendor.p({
       disabled: true,
       modelValue: $data.MaintainTask.taskName
     }),
-    p: common_vendor.p({
+    k: common_vendor.p({
       label: "维护任务"
     }),
-    q: common_vendor.o(($event) => $data.MaintainTask.customerName = $event),
-    r: common_vendor.p({
+    l: common_vendor.o(($event) => $data.MaintainTask.customerName = $event),
+    m: common_vendor.p({
       disabled: true,
       modelValue: $data.MaintainTask.customerName
     }),
-    s: common_vendor.p({
+    n: common_vendor.p({
       label: "客户"
     }),
-    t: common_vendor.o($options.change),
-    v: common_vendor.o(($event) => $data.maintainTypes = $event),
-    w: common_vendor.p({
+    o: common_vendor.o(($event) => $data.maintainTypes = $event),
+    p: common_vendor.p({
       localdata: $data.maintainTypesData,
       modelValue: $data.maintainTypes
     }),
-    x: common_vendor.p({
+    q: common_vendor.p({
       label: "维护类型"
     }),
-    y: common_vendor.p({
+    r: common_vendor.p({
       label: "维护项目列表"
     }),
-    z: common_vendor.p({
+    s: common_vendor.p({
       width: "300rpx",
       align: "center"
     }),
-    A: common_vendor.p({
+    t: common_vendor.p({
       width: "300rpx",
       align: "center"
     }),
-    B: common_vendor.f($data.maintainListData, (item, index, i0) => {
+    v: common_vendor.f($data.maintainListData, (item, index, i0) => {
       return {
         a: common_vendor.t(item.name),
-        b: "6d1a1907-26-" + i0 + "," + ("6d1a1907-25-" + i0),
+        b: "6d1a1907-18-" + i0 + "," + ("6d1a1907-17-" + i0),
         c: common_vendor.t(item.content),
-        d: "6d1a1907-27-" + i0 + "," + ("6d1a1907-25-" + i0),
+        d: "6d1a1907-19-" + i0 + "," + ("6d1a1907-17-" + i0),
         e: index,
-        f: "6d1a1907-25-" + i0 + ",6d1a1907-21"
+        f: "6d1a1907-17-" + i0 + ",6d1a1907-13"
       };
     }),
-    C: common_vendor.p({
+    w: common_vendor.p({
       align: "center"
     }),
-    D: common_vendor.p({
+    x: common_vendor.p({
       align: "center"
     }),
-    E: common_vendor.p({
+    y: common_vendor.p({
       border: true,
       stripe: true
     }),
-    F: common_vendor.sr("form", "6d1a1907-13,6d1a1907-12"),
-    G: common_vendor.p({
+    z: common_vendor.sr("form", "6d1a1907-5,6d1a1907-4"),
+    A: common_vendor.p({
       modelValue: $data.MaintainTask,
       ["label-width"]: "100px"
     }),
-    H: common_vendor.o($options.confirm1),
-    I: common_vendor.p({
+    B: common_vendor.o($options.confirm1),
+    C: common_vendor.p({
       show: $data.showDetail,
       title: "维护任务详情",
       width: "700rpx"
     }),
-    J: common_vendor.o($options.confirm2),
-    K: common_vendor.o($options.cancel2),
-    L: common_vendor.p({
+    D: common_vendor.o($options.confirm2),
+    E: common_vendor.o($options.cancel2),
+    F: common_vendor.p({
       show: $data.showReceive,
       title: "维护任务领取",
       showCancelButton: "true"
