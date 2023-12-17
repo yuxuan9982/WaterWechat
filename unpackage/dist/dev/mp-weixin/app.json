@@ -3,7 +3,8 @@
     "pages/login/login",
     "pages/index/index",
     "pages/MaintainTaskReceive/MaintainTaskReceive",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/MaintainProcedureRecord/MaintainProcedureRecord"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -20,10 +21,10 @@
         "text": "任务领取"
       },
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "static/logo.png",
-        "selectedIconPath": "static/logo.png",
-        "text": "index"
+        "pagePath": "pages/MaintainProcedureRecord/MaintainProcedureRecord",
+        "iconPath": "static/过程记录.png",
+        "selectedIconPath": "static/过程记录.png",
+        "text": "维护过程记录"
       }
     ]
   },

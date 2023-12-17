@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "维护过程记录",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-tabs": "../../uni_modules/uview-plus/components/u-tabs/u-tabs",
+    "zb-table": "../../uni_modules/zb-table/components/zb-table/zb-table",
+    "uni-pagination": "../../uni_modules/uni-pagination/components/uni-pagination/uni-pagination"
+  }
+}

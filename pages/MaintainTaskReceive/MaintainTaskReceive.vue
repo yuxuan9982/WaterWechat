@@ -97,10 +97,10 @@
 					},
 				],
 				column1:[
-				    { type:'index', width:60 },
-				    { name: 'taskName', label: '维护任务',width:80},
-				    { name: 'maintainType', label: '维护类型',},
-					{ name: 'operation', type:'operation',label: '操作',renders:[
+				    // { type:'index', width:60 },
+				    { name: 'taskName', label: '维护任务',width:150},
+				    { name: 'maintainType', label: '维护类型',width:100},
+					{ name: 'operation', type:'operation',label: '操作',width:100,renders:[
 						  {
 							name:'编辑',
 							class:'edit',
@@ -108,8 +108,8 @@
 							func:'edit' // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
 						  },
 						  {
-							name:'删除',
-							type:'warn', // type 为custom的时候自定义按钮
+							name:'认领',
+							type:'primary', // type 为custom的时候自定义按钮
 							class:"del",
 							func:'dele',
 						  },
@@ -185,7 +185,7 @@
 				uni.showToast({
 				  icon:'none',
 				  duration:3000,
-				  title:'点击删除'
+				  title:'点击认领'
 				})
 				// alert('点击删除')
 				console.log(ite,index)
@@ -194,7 +194,7 @@
 				uni.showToast({
 				  icon:'none',
 				  duration:3000,
-				  title:'点击编辑'
+				  title:'点击详情'
 				})
 				console.log(ite,index);
 				this.MaintainTask.taskName=ite.taskName;

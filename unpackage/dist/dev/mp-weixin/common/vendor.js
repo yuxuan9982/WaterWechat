@@ -7782,7 +7782,7 @@ const pages = [
   {
     path: "pages/MaintainTaskReceive/MaintainTaskReceive",
     style: {
-      navigationBarTitleText: "",
+      navigationBarTitleText: "维护任务领取",
       enablePullDownRefresh: false
     }
   },
@@ -7790,6 +7790,13 @@ const pages = [
     path: "pages/test/test",
     style: {
       navigationBarTitleText: "",
+      enablePullDownRefresh: false
+    }
+  },
+  {
+    path: "pages/MaintainProcedureRecord/MaintainProcedureRecord",
+    style: {
+      navigationBarTitleText: "维护过程记录",
       enablePullDownRefresh: false
     }
   }
@@ -7812,10 +7819,10 @@ const tabBar = {
       text: "任务领取"
     },
     {
-      pagePath: "pages/index/index",
-      iconPath: "static/logo.png",
-      selectedIconPath: "static/logo.png",
-      text: "index"
+      pagePath: "pages/MaintainProcedureRecord/MaintainProcedureRecord",
+      iconPath: "static/过程记录.png",
+      selectedIconPath: "static/过程记录.png",
+      text: "维护过程记录"
     }
   ]
 };

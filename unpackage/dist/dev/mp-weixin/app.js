@@ -124,6 +124,7 @@ if (!Math) {
   "./pages/index/index.js";
   "./pages/MaintainTaskReceive/MaintainTaskReceive.js";
   "./pages/test/test.js";
+  "./pages/MaintainProcedureRecord/MaintainProcedureRecord.js";
 }
 const _sfc_main = {
   onLaunch: function() {

@@ -1,0 +1,65 @@
+/* 水平间距 */
+/* 水平间距 */
+view.data-v-02b0c54f, scroll-view.data-v-02b0c54f, swiper-item.data-v-02b0c54f {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.u-tabs__wrapper.data-v-02b0c54f {
+
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+}
+.u-tabs__wrapper__scroll-view-wrapper.data-v-02b0c54f {
+  flex: 1;
+  overflow: auto hidden;
+}
+.u-tabs__wrapper__scroll-view.data-v-02b0c54f {
+
+  display: flex;
+
+  flex-direction: row;
+  flex: 1;
+}
+.u-tabs__wrapper__nav.data-v-02b0c54f {
+
+  display: flex;
+
+  flex-direction: row;
+  position: relative;
+}
+.u-tabs__wrapper__nav__item.data-v-02b0c54f {
+  padding: 0 11px;
+
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.u-tabs__wrapper__nav__item--disabled.data-v-02b0c54f {
+  cursor: not-allowed;
+}
+.u-tabs__wrapper__nav__item__text.data-v-02b0c54f {
+  font-size: 15px;
+  color: #606266;
+}
+.u-tabs__wrapper__nav__item__text--disabled.data-v-02b0c54f {
+  color: #c8c9cc !important;
+}
+.u-tabs__wrapper__nav__line.data-v-02b0c54f {
+  height: 3px;
+  background: #3c9cff;
+  width: 30px;
+  position: absolute;
+  bottom: 2px;
+  border-radius: 100px;
+  transition-property: transform;
+  transition-duration: 300ms;
+}
