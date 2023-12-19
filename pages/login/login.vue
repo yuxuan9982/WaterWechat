@@ -9,7 +9,7 @@
 			</uni-forms-item>
 		</uni-forms>
 		<uni-data-checkbox multiple v-model="test" :localdata="testList" class="uni-ma-2" ></uni-data-checkbox>
-		<button class="button" @click="submit" style="background-color: #2D8CF0;color: white;margin-top: 20rpx;">登陆</button>
+		<button class="button" @click="submit" style="background-color: #2D8CF0;color: white;margin-top: 20rpx;">登录</button>
 	</view>
 </template>
 <script>

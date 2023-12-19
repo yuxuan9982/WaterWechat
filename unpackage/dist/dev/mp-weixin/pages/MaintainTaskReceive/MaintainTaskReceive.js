@@ -46,7 +46,7 @@ const _sfc_main = {
         { name: "maintainType", label: "维护类型", width: 100 },
         { name: "operation", type: "operation", label: "操作", width: 100, renders: [
           {
-            name: "编辑",
+            name: "详情",
             class: "edit",
             type: "primary",
             func: "edit"

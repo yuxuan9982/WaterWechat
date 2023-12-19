@@ -6,6 +6,9 @@ const _sfc_main = {
     return {
       tabsList: [{ name: "相关任务" }, { name: "所有任务" }],
       tabsIndex: 0,
+      showAllDetail: false,
+      showTransfer: false,
+      showComplete: false,
       column1: [
         { name: "taskInfo", label: "维护任务", width: 100, fixed: true },
         { name: "maintainType", label: "维护类型", width: 80 },
@@ -35,8 +38,8 @@ const _sfc_main = {
         ] }
       ],
       column2: [
-        { name: "taskInfo", label: "维护任务", width: 100, fixed: true },
-        { name: "maintenancePersonnel", label: "维护人员", width: 100, fixed: true },
+        { name: "taskInfo", label: "维护任务", width: 80, fixed: true },
+        { name: "maintenancePersonnel", label: "维护人员", width: 80, fixed: true },
         { name: "maintainType", label: "维护类型", width: 80 },
         { name: "pickupTime", label: "领取时间", width: 100 },
         { name: "endTime", label: "截止时间", width: 100 },
@@ -51,6 +54,41 @@ const _sfc_main = {
           }
         ] }
       ],
+      maintainItemList: [
+        {
+          name: "维护项目1",
+          content: "设备清洁",
+          maintainData: "维护数据1",
+          finishSituation: "完成"
+        },
+        {
+          name: "维护项目2",
+          content: "设备故障维护",
+          maintainData: "维护数据2",
+          finishSituation: "完成"
+        },
+        {
+          name: "维护项目3",
+          content: "维护内容3",
+          maintainData: "维护数据3",
+          finishSituation: "完成"
+        },
+        {
+          name: "维护项目4",
+          content: "维护内容4",
+          maintainData: "维护数据4",
+          finishSituation: "完成"
+        }
+      ],
+      maintainItemColumns: [
+        { name: "name", label: "维护项目", width: 100, fixed: true },
+        { name: "content", label: "维护项目内容", width: 150, fixed: true },
+        { name: "finishSituation", label: "完成情况", width: 100 }
+      ],
+      transferer: {
+        name: "",
+        reason: ""
+      },
       dataSelf: [],
       dataAll: [],
       pageSize: 9,
@@ -145,23 +183,25 @@ const _sfc_main = {
     showDetail(ite, index) {
       common_vendor.index.showToast({
         icon: "none",
-        duration: 3e3,
+        duration: 500,
         title: "查看维护信息"
       });
       console.log(ite, index);
+      this.showAllDetail = true;
     },
     trans(ite, index) {
       common_vendor.index.showToast({
         icon: "none",
-        duration: 3e3,
+        duration: 500,
         title: "转交"
       });
       console.log(ite, index);
+      this.showTransfer = true;
     },
     maintain(ite, index) {
       common_vendor.index.showToast({
         icon: "none",
-        duration: 3e3,
+        duration: 1e3,
         title: "维护"
       });
       console.log(ite, index);
@@ -169,10 +209,26 @@ const _sfc_main = {
     complete(ite, index) {
       common_vendor.index.showToast({
         icon: "none",
-        duration: 3e3,
+        duration: 500,
         title: "完成"
       });
       console.log(ite, index);
+      this.showComplete = true;
+    },
+    confirmAllDetail() {
+      this.showAllDetail = false;
+    },
+    confirmTransfer() {
+      this.showTransfer = false;
+    },
+    cancelTransfer() {
+      this.showTransfer = false;
+    },
+    confirmComplete() {
+      this.showComplete = false;
+    },
+    cancelComplete() {
+      this.showComplete = false;
     }
   }
 };
@@ -180,13 +236,21 @@ if (!Array) {
   const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
   const _easycom_zb_table2 = common_vendor.resolveComponent("zb-table");
   const _easycom_uni_pagination2 = common_vendor.resolveComponent("uni-pagination");
-  (_easycom_u_tabs2 + _easycom_zb_table2 + _easycom_uni_pagination2)();
+  const _easycom_u_modal2 = common_vendor.resolveComponent("u-modal");
+  const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
+  const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
+  const _easycom_uni_forms2 = common_vendor.resolveComponent("uni-forms");
+  (_easycom_u_tabs2 + _easycom_zb_table2 + _easycom_uni_pagination2 + _easycom_u_modal2 + _easycom_uni_easyinput2 + _easycom_uni_forms_item2 + _easycom_uni_forms2)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_zb_table = () => "../../uni_modules/zb-table/components/zb-table/zb-table.js";
 const _easycom_uni_pagination = () => "../../uni_modules/uni-pagination/components/uni-pagination/uni-pagination.js";
+const _easycom_u_modal = () => "../../uni_modules/uview-plus/components/u-modal/u-modal.js";
+const _easycom_uni_easyinput = () => "../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.js";
+const _easycom_uni_forms_item = () => "../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.js";
+const _easycom_uni_forms = () => "../../uni_modules/uni-forms/components/uni-forms/uni-forms.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_zb_table + _easycom_uni_pagination)();
+  (_easycom_u_tabs + _easycom_zb_table + _easycom_uni_pagination + _easycom_u_modal + _easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -200,6 +264,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.o($options.complete),
     g: $data.tabsIndex === 0,
     h: common_vendor.p({
+      fit: true,
       border: true,
       stripe: true,
       columns: $data.column1,
@@ -217,6 +282,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     m: common_vendor.o($options.showDetail),
     n: $data.tabsIndex === 1,
     o: common_vendor.p({
+      fit: true,
       border: true,
       stripe: true,
       columns: $data.column2,
@@ -229,6 +295,56 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       ["page-size"]: $data.pageSize2,
       current: $data.pageCurrent2,
       total: $data.total2
+    }),
+    s: common_vendor.sr("tableAllDetail", "38046e5a-6,38046e5a-5"),
+    t: common_vendor.p({
+      fit: true,
+      border: true,
+      stripe: true,
+      columns: $data.maintainItemColumns,
+      data: $data.maintainItemList
+    }),
+    v: common_vendor.o($options.confirmAllDetail),
+    w: common_vendor.p({
+      show: $data.showAllDetail,
+      title: "维护项目详情"
+    }),
+    x: common_vendor.o(($event) => $data.transferer.name = $event),
+    y: common_vendor.p({
+      placeholder: "请输入转交对象",
+      modelValue: $data.transferer.name
+    }),
+    z: common_vendor.p({
+      label: "转交对象",
+      required: true
+    }),
+    A: common_vendor.o(($event) => $data.transferer.reason = $event),
+    B: common_vendor.p({
+      type: "password",
+      placeholder: "请输入转交理由",
+      modelValue: $data.transferer.reason
+    }),
+    C: common_vendor.p({
+      label: "转交理由"
+    }),
+    D: common_vendor.sr("form", "38046e5a-8,38046e5a-7"),
+    E: common_vendor.p({
+      modelValue: _ctx.tranferer,
+      ["label-width"]: "100px"
+    }),
+    F: common_vendor.o($options.confirmTransfer),
+    G: common_vendor.o($options.cancelTransfer),
+    H: common_vendor.p({
+      show: $data.showTransfer,
+      title: "转交维护项目",
+      showCancelButton: "true"
+    }),
+    I: common_vendor.o($options.confirmComplete),
+    J: common_vendor.o($options.cancelComplete),
+    K: common_vendor.p({
+      show: $data.showComplete,
+      title: "完成维护项目",
+      showCancelButton: "true"
     })
   };
 }

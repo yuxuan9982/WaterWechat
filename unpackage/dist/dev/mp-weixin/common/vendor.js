@@ -7769,7 +7769,7 @@ const pages = [
   {
     path: "pages/login/login",
     style: {
-      navigationBarTitleText: "登陆",
+      navigationBarTitleText: "登录",
       enablePullDownRefresh: false
     }
   },

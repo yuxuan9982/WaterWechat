@@ -102,7 +102,7 @@
 				    { name: 'maintainType', label: '维护类型',width:100},
 					{ name: 'operation', type:'operation',label: '操作',width:100,renders:[
 						  {
-							name:'编辑',
+							name:'详情',
 							class:'edit',
 							type:"primary",
 							func:'edit' // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit

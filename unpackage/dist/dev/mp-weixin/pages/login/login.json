@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "登陆",
+  "navigationBarTitleText": "登录",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "uni-easyinput": "../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput",

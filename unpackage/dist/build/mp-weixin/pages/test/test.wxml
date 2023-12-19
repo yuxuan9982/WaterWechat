@@ -1,0 +1,1 @@
+<view><button bindtap="{{a}}">打开弹窗</button><uni-popup wx:if="{{c}}" class="r" u-s="{{['d']}}" u-r="popup" u-i="968badc2-0" bind:__l="__l" u-p="{{c}}">底部弹出 Popup</uni-popup></view>

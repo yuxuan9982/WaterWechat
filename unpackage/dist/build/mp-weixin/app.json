@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/MaintainTaskReceive/MaintainTaskReceive",
+    "pages/test/test",
+    "pages/MaintainProcedureRecord/MaintainProcedureRecord"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/MaintainTaskReceive/MaintainTaskReceive",
+        "iconPath": "static/任务领取池.png",
+        "selectedIconPath": "static/任务领取池.png",
+        "text": "任务领取"
+      },
+      {
+        "pagePath": "pages/MaintainProcedureRecord/MaintainProcedureRecord",
+        "iconPath": "static/过程记录.png",
+        "selectedIconPath": "static/过程记录.png",
+        "text": "维护过程记录"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

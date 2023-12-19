@@ -47,7 +47,7 @@ const _sfc_main = {
   mounted() {
     if (this.widthThArr.length > 0) {
       const selectionWidth = this.selection === "selection" ? 50 : 0;
-      this.root.minWidth = this.widthThArr.reduce((a, b) => Number(a) + Number(b)) + selectionWidth;
+      this.root.minWidth = Number(this.widthThArr.reduce((a, b) => Number(a) + Number(b))) + selectionWidth;
     }
   },
   unmounted() {
@@ -58,6 +58,10 @@ const _sfc_main = {
   methods: {
     minWidthUpdate(width) {
       this.widthThArr.push(width);
+      if (this.widthThArr.length > 0) {
+        const selectionWidth = this.selection === "selection" ? 50 : 0;
+        this.root.minWidth = Number(this.widthThArr.reduce((a, b) => Number(a) + Number(b))) + selectionWidth;
+      }
     },
     // 选中
     checkboxSelected(e) {

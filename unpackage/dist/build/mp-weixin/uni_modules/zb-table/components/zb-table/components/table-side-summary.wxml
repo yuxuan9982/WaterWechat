@@ -1,0 +1,1 @@
+<view class="zb-table-header data-v-1c499e5d" style="display:flex"><view class="item-tr data-v-1c499e5d"><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="item-td data-v-1c499e5d" style="{{'width:' + item.b + ';' + ('border-right:' + b) + ';' + ('text-align:' + item.c)}}"><block class="data-v-1c499e5d">{{item.a}}</block></view></view></view>
