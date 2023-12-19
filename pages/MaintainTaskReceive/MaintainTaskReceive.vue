@@ -63,6 +63,7 @@
 	export default {
 		data() {
 			return {
+				expanded:false,
 				searchVal: '',
 				tableData: [],
 				// 每页数据量

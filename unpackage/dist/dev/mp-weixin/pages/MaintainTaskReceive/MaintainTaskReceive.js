@@ -4,6 +4,7 @@ const pages_MaintainTaskReceive_tableData = require("./tableData.js");
 const _sfc_main = {
   data() {
     return {
+      expanded: false,
       searchVal: "",
       tableData: [],
       // 每页数据量

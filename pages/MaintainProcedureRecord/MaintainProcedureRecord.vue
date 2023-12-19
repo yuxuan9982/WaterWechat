@@ -2,8 +2,9 @@
 	<view>
 		<u-tabs :list="tabsList" @click="tabsClick"></u-tabs>
 		<zb-table ref="tableSelf" :fit="true" :border="true" :stripe="true" :columns="column1" :data="dataSelf" @trans="trans" @maintain="maintain" @complete="complete" v-show="tabsIndex===0"></zb-table>
-		<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" v-show="tabsIndex===0"/></view>
 		
+		<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" v-show="tabsIndex===0"/></view>
+		<!-- <my-table></my-table> -->
 		<zb-table ref="tableAll" :fit="true" :border="true" :stripe="true" :columns="column2" :data="dataAll" @showDetail="showDetail" v-show="tabsIndex===1"></zb-table>
 		<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize2" :current="pageCurrent2" :total="total2" @change="change2" v-show="tabsIndex===1"/></view>
 		<u-modal :show="showAllDetail" title="维护项目详情" @confirm="confirmAllDetail">
@@ -57,7 +58,16 @@
 							func:'complete',
 						  },
 					]},
-				],column2:[
+				],thcolumn1:[
+					{ key: 'taskInfo', title: '维护任务',width:100, fixed:true},
+					{ key: 'maintainType', title: '维护类型',width:80},
+					{ key: 'pickupTime', title: '领取时间',width:100},
+					{ key: 'endTime', title: '截止时间',width:100},
+					{ key: 'currentProgress', title: '截止时间',width:150},
+					{ key: 'maintainOverview', title: '维护概述',width:150},
+					{ key: 'operation', type:'operation',title: '操作',slot:'a'}
+				],
+				column2:[
 					{ name: 'taskInfo', label: '维护任务',width:80, fixed:true},
 					{ name: 'maintenancePersonnel', label: '维护人员',width:80, fixed:true},
 					{ name: 'maintainType', label: '维护类型',width:80},

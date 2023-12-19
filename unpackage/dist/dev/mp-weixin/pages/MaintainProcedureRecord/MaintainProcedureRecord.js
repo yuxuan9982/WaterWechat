@@ -37,6 +37,15 @@ const _sfc_main = {
           }
         ] }
       ],
+      thcolumn1: [
+        { key: "taskInfo", title: "维护任务", width: 100, fixed: true },
+        { key: "maintainType", title: "维护类型", width: 80 },
+        { key: "pickupTime", title: "领取时间", width: 100 },
+        { key: "endTime", title: "截止时间", width: 100 },
+        { key: "currentProgress", title: "截止时间", width: 150 },
+        { key: "maintainOverview", title: "维护概述", width: 150 },
+        { key: "operation", type: "operation", title: "操作", slot: "a" }
+      ],
       column2: [
         { name: "taskInfo", label: "维护任务", width: 80, fixed: true },
         { name: "maintenancePersonnel", label: "维护人员", width: 80, fixed: true },

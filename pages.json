@@ -32,7 +32,22 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "维护过程记录",
-				"enablePullDownRefresh" : false
+				"enablePullDownRefresh" : false,
+				// #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+				"usingComponents": {
+					"my-table": "/wxcomponents/table/table"
+				},
+				// #endif
+				// #ifdef MP-BAIDU
+				"usingComponents": {
+					"my-table": "/swancomponents/table/table"
+				},
+				// #endif
+				// #ifdef MP-ALIPAY
+				"usingComponents": {
+					"my-table": "/mycomponents/table/table"
+				}
+				// #endif
 			}
 		}
 	],

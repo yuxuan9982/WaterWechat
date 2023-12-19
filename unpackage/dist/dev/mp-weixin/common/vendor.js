@@ -7797,7 +7797,10 @@ const pages = [
     path: "pages/MaintainProcedureRecord/MaintainProcedureRecord",
     style: {
       navigationBarTitleText: "维护过程记录",
-      enablePullDownRefresh: false
+      enablePullDownRefresh: false,
+      usingComponents: {
+        "my-table": "/wxcomponents/table/table"
+      }
     }
   }
 ];
