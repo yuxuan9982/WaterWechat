@@ -6,6 +6,9 @@
     "pages/test/test",
     "pages/MaintainProcedureRecord/MaintainProcedureRecord"
   ],
+  "usingComponents": {
+    "my-table": "/wxcomponents/table/table"
+  },
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -25,8 +28,13 @@
         "iconPath": "static/过程记录.png",
         "selectedIconPath": "static/过程记录.png",
         "text": "维护过程记录"
+      },
+      {
+        "pagePath": "pages/test/test",
+        "iconPath": "static/过程记录.png",
+        "selectedIconPath": "static/过程记录.png",
+        "text": "test"
       }
     ]
-  },
-  "usingComponents": {}
+  }
 }

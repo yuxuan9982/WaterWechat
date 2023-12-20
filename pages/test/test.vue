@@ -1,17 +1,150 @@
 <template>
 	<view>
-		<button @click="open">打开弹窗</button>
-		<uni-popup ref="popup" type="bottom">底部弹出 Popup</uni-popup>
+		<view class="uni-container">
+			<uni-table ref="table" :loading="loading" border stripe type="selection" emptyText="暂无更多数据" @selection-change="selectionChange">
+				<uni-tr>
+					<uni-th width="150" align="center">日期</uni-th>
+					<uni-th width="150" align="center">姓名</uni-th>
+					<uni-th align="center">地址</uni-th>
+					<uni-th width="204" align="center">设置</uni-th>
+				</uni-tr>
+				<uni-tr v-for="(item, index) in tableData" :key="index">
+					
+					<uni-td>{{ item.date }}</uni-td>
+					<uni-td>
+						<view class="name">{{ item.name }}</view>
+					</uni-td>
+					<uni-td align="center">{{ item.address }}</uni-td>
+					<uni-td>
+						<view class="uni-group">
+							<button class="uni-button" size="mini" type="primary" @click="submit(item)">修改</button>
+							<button class="uni-button" size="mini" type="warn">删除</button>
+						</view>
+					</uni-td>
+				</uni-tr>
+			</uni-table>
+			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
+		</view>
+		<view class="load-more" v-show="showLoadMore">
+		      {{ loadMoreText }}
+		</view>
 	</view>
 </template>
 <script>
+import tableData from './tableData.js'
 export default {
-   methods:{
-      open(){
-        // 通过组件定义的ref调用uni-popup方法 ,如果传入参数 ，type 属性将失效 ，仅支持 ['top','left','bottom','right','center']
-        this.$refs.popup.open('top')
-      }
-   }
+	data() {
+		return {
+			searchVal: '',
+			showLoadMore: false,
+			loadMoreText: '上拉加载更多',
+			tableData: [],
+			// 每页数据量
+			pageSize: 10,
+			// 当前页
+			pageCurrent: 1,
+			// 数据总量
+			total: 0,
+			loading: false
+		}
+	},
+	onReachBottom() {
+		// 监听页面滚动到底部事件
+		this.showLoadMore = true;
+		this.loadMoreText = '加载中...';
+
+		// 模拟异步加载数据，实际项目中应该根据实际情况调用接口获取数据
+		setTimeout(() => {
+		  const newData = [{ id: 3, name: 'Bob' }, { id: 4, name: 'Alice' }];
+		  this.tableData = [...this.tableData, ...newData];
+		  this.showLoadMore = false;
+		  this.loadMoreText = '上拉加载更多';
+		}, 1500);
+	},
+	onLoad() {
+		this.selectedIndexs = []
+		this.getData(1)
+	},
+	methods: {
+		// 多选处理
+		selectedItems() {
+			return this.selectedIndexs.map(i => this.tableData[i])
+		},
+		// 多选
+		selectionChange(e) {
+			console.log(e.detail.index)
+			this.selectedIndexs = e.detail.index
+		},
+		//批量删除
+		delTable() {
+			console.log(this.selectedItems())
+		},
+		// 分页触发
+		change(e) {
+			this.$refs.table.clearSelection()
+			this.selectedIndexs.length = 0
+			this.getData(e.current)
+		},
+		// 搜索
+		search() {
+			this.getData(1, this.searchVal)
+		},
+		// 获取数据
+		getData(pageCurrent, value = '') {
+			this.loading = true
+			this.pageCurrent = pageCurrent
+			this.request({
+				pageSize: this.pageSize,
+				pageCurrent: pageCurrent,
+				value: value,
+				success: res => {
+					// console.log('data', res);
+					this.tableData = res.data
+					this.total = res.total
+					this.loading = false
+				}
+			})
+		},
+		// 伪request请求
+		request(options) {
+			const { pageSize, pageCurrent, success, value } = options
+			let total = tableData.length
+			let data = tableData.filter((item, index) => {
+				const idx = index - (pageCurrent - 1) * pageSize
+				return idx < pageSize && idx >= 0
+			})
+			if (value) {
+				data = []
+				tableData.forEach(item => {
+					if (item.name.indexOf(value) !== -1) {
+						data.push(item)
+					}
+				})
+				total = data.length
+			}
+
+			setTimeout(() => {
+				typeof success === 'function' &&
+					success({
+						data: data,
+						total: total
+					})
+			}, 500)
+		},submit(item){
+			console.log(item);
+		}
+	}
 }
 </script>
+<style>
+/* #ifndef H5 */
+/* page {
+	padding-top: 85px;
+} */
+/* #endif */
+.uni-group {
+	display: flex;
+	align-items: center;
+}
+</style>
 

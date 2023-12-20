@@ -1,12 +1,19 @@
 <template>
 	<view>
 		<u-tabs :list="tabsList" @click="tabsClick"></u-tabs>
-		<zb-table ref="tableSelf" :fit="true" :border="true" :stripe="true" :columns="column1" :data="dataSelf" @trans="trans" @maintain="maintain" @complete="complete" v-show="tabsIndex===0"></zb-table>
+		<view style="height: 600px" v-show="tabsIndex===0">
+			<zb-table ref="tableSelf" :fit="true"  :stripe="true" :columns="column1" :data="dataSelf" @trans="trans" @maintain="maintain" @complete="complete" @open="open" v-show="tabsIndex===0"
+			:isShowLoadMore="true" @pullUpLoading="pullUpLoadingAction">
+			</zb-table>
+		</view>
 		
-		<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" v-show="tabsIndex===0"/></view>
-		<!-- <my-table></my-table> -->
-		<zb-table ref="tableAll" :fit="true" :border="true" :stripe="true" :columns="column2" :data="dataAll" @showDetail="showDetail" v-show="tabsIndex===1"></zb-table>
-		<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize2" :current="pageCurrent2" :total="total2" @change="change2" v-show="tabsIndex===1"/></view>
+		<!-- <my-table ref="tableAll" :columns="mycolumn1" :dataList="dataSelf" :bindclicklistitem="handleClickAction"></my-table> -->
+		
+		<view style="height: 600px" v-show="tabsIndex===1">
+		<zb-table ref="tableAll" :fit="true" :border="true" :stripe="true" :columns="column2" :data="dataAll" @showDetail="showDetail" @open="open"  v-show="tabsIndex===1"
+		:isShowLoadMore="true" @pullUpLoading="pullUpLoadingAction2"></zb-table>
+		</view>
+		
 		<u-modal :show="showAllDetail" title="维护项目详情" @confirm="confirmAllDetail">
 			<zb-table ref="tableAllDetail" :fit="true" :border="true" :stripe="true" :columns="maintainItemColumns" :data="maintainItemList"  ></zb-table>
 		</u-modal>
@@ -21,6 +28,43 @@
 			</uni-forms>
 		</u-modal>
 		<u-modal :show="showComplete" title="完成维护项目" @confirm="confirmComplete" @cancel="cancelComplete" showCancelButton="true"></u-modal>
+		<u-modal :show="showOpen" title="" @confirm="confirmOpen">
+			<uni-forms ref="form" :modelValue="MaintainTask" label-width="100px">
+				<uni-forms-item label="维护任务">
+					<uni-easyinput disabled  v-model="MaintainTask.taskName" ></uni-easyinput>
+				</uni-forms-item>	
+				<uni-forms-item label="维护人员">
+					<uni-easyinput disabled  v-model="MaintainTask.maintenancePersonnel" ></uni-easyinput>
+				</uni-forms-item>	
+				<uni-forms-item label="维护类型">
+					<uni-easyinput disabled  v-model="MaintainTask.maintainType" ></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item label="领取时间">
+					<uni-easyinput disabled  v-model="MaintainTask.pickupTime" ></uni-easyinput>
+				</uni-forms-item>
+				<uni-forms-item label="截止时间" >
+					<uni-easyinput disabled  v-model="MaintainTask.endTime" ></uni-easyinput>
+				</uni-forms-item>	
+				<uni-forms-item label="当前进度" >
+					<uni-easyinput disabled  v-model="MaintainTask.currentProgress" ></uni-easyinput>
+				</uni-forms-item>	
+				<uni-forms-item label="维护概述" >
+					<uni-easyinput disabled  v-model="MaintainTask.maintainOverview" ></uni-easyinput>
+				</uni-forms-item>	
+				<!-- <uni-forms-item label="维护项目列表" ></uni-forms-item> -->
+				<!-- <uni-table  border stripe >
+					<uni-tr>
+						<uni-th width="300rpx" align="center">维护项目</uni-th>
+						<uni-th width="300rpx" align="center">维护项目内容</uni-th>
+					</uni-tr>
+					<uni-tr v-for="(item, index) in maintainListData" :key="index">
+						<uni-td align="center">{{ item.name }}</uni-td>
+						<uni-td align="center">{{ item.content }}</uni-td>
+					</uni-tr>
+				</uni-table>
+				 -->
+			</uni-forms>
+		</u-modal>
 	</view>
 </template>
 
@@ -34,18 +78,30 @@
 				showAllDetail: false,
 				showTransfer: false,
 				showComplete: false,
+				showOpen: false,
+				num1: 0,
+				MaintainTask:{
+					taskName: "维护任务1",
+					maintenancePersonnel: "工程师A",
+					maintainType: "线上",
+					pickupTime: "2023-10-01",
+					endTime: "2023-11-01",
+					currentProgress: "任务待被领取",
+					maintainOverview:"设备常规检查",
+					comment:"按要求完成",
+				},
 				column1:[
-					{ name: 'taskInfo', label: '维护任务',width:100, fixed:true},
-					{ name: 'maintainType', label: '维护类型',width:80},
-					{ name: 'pickupTime', label: '领取时间',width:100},
-					{ name: 'endTime', label: '截止时间',width:100},
-					{ name: 'currentProgress', label: '截止时间',width:150},
-					{ name: 'maintainOverview', label: '维护概述',width:150},
+					{ name: 'taskName', label: '维护任务',width:100, fixed:true},
+					// { name: 'maintainType', label: '维护类型',width:80},
+					// { name: 'pickupTime', label: '领取时间',width:100},
+					// { name: 'endTime', label: '截止时间',width:100},
+					// { name: 'currentProgress', label: '截止时间',width:150},
+					// { name: 'maintainOverview', label: '维护概述',width:150},
 					{ name: 'operation', type:'operation',label: '操作',width:220,renders:[
 						  {
 							name:'转交',
 							type:"primary",
-							func:'trans' // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
+							func:'trans' ,// func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
 						  },
 						  {
 							name:'维护',
@@ -56,31 +112,42 @@
 							name:'完成',
 							type:'primary', // type 为custom的时候自定义按钮
 							func:'complete',
+						  },{
+							name:'展开',
+							type:'custom', // type 为custom的时候自定义按钮
+							class: 'custom',
+							func:'open',
 						  },
 					]},
-				],thcolumn1:[
-					{ key: 'taskInfo', title: '维护任务',width:100, fixed:true},
-					{ key: 'maintainType', title: '维护类型',width:80},
-					{ key: 'pickupTime', title: '领取时间',width:100},
-					{ key: 'endTime', title: '截止时间',width:100},
-					{ key: 'currentProgress', title: '截止时间',width:150},
-					{ key: 'maintainOverview', title: '维护概述',width:150},
-					{ key: 'operation', type:'operation',title: '操作',slot:'a'}
+				],mycolumn1:[
+					{ key: 'taskName', title: '维护任务'},
+					{ key: 'maintainType', title: '维护类型'},
+					{ key: 'maintainOverview', title: '维护概述'},
+					// {
+					//     title: "操作",
+					//     key: "action",
+					//     type: "action"
+					// }
 				],
 				column2:[
-					{ name: 'taskInfo', label: '维护任务',width:80, fixed:true},
+					{ name: 'taskName', label: '维护任务',width:80, fixed:true},
 					{ name: 'maintenancePersonnel', label: '维护人员',width:80, fixed:true},
-					{ name: 'maintainType', label: '维护类型',width:80},
-					{ name: 'pickupTime', label: '领取时间',width:100},
-					{ name: 'endTime', label: '截止时间',width:100},
-					{ name: 'currentProgress', label: '截止时间',width:150},
-					{ name: 'maintainOverview', label: '维护概述',width:150},
+					// { name: 'maintainType', label: '维护类型',width:80},
+					// { name: 'pickupTime', label: '领取时间',width:100},
+					// { name: 'endTime', label: '截止时间',width:100},
+					// { name: 'currentProgress', label: '截止时间',width:150},
+					// { name: 'maintainOverview', label: '维护概述',width:150},
 					{ name: 'operation', type:'operation',label: '操作',width:200,renders:[
 						  {
 							name:'查看维护信息',
 							type:"primary",
 							func:'showDetail' // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
-						  }
+						  },{
+							name:'展开',
+							type:'custom', // type 为custom的时候自定义按钮
+							class: 'custom',
+							func:'open',
+						  },
 					]},
 				],maintainItemList:[{
 						name: '维护项目1',
@@ -113,95 +180,16 @@
 				},
 				dataSelf:[],
 				dataAll:[],
-				pageSize: 9,
-				// 当前页
-				pageCurrent: 1,
-				// 数据总量
-				total: 0,
-				pageSize2: 9,
-				// 当前页
-				pageCurrent2: 1,
-				// 数据总量
-				total2: 0,
+				showLoadMore: false,
+				loadMoreText: '上拉加载更多',
 			}
 		},onLoad() {
-			this.getData(1);
-			this.getData2(1);
-		},
-		methods: {
+			this.dataSelf=RecordData.slice(0,15);
+			this.dataAll=RecordData.slice(0,15);
+		},methods: {
 			tabsClick(item){
 				this.tabsIndex=item.index;
 				console.log(this.tabsIndex);
-			},
-			// 分页触发
-			change(e) {
-				this.$refs.tableSelf.clearSelection()
-				this.getData(e.current)
-			},
-			// 搜索
-			search() {
-				this.getData(1, this.searchVal)
-			},// 获取数据
-			getData(pageCurrent, value = '') {
-				this.pageCurrent = pageCurrent
-				this.request({
-					pageSize: this.pageSize,
-					pageCurrent: pageCurrent,
-					value: value,
-					success: res => {
-						// console.log('data', res);
-						this.dataSelf = res.data
-						this.total = res.total
-					}
-				})
-			},
-			//伪request请求
-			request(options) {
-				const { pageSize, pageCurrent, success, value } = options
-				let total = RecordData.length
-				let data = RecordData.filter((item, index) => {
-					const idx = index - (pageCurrent - 1) * pageSize
-					return idx < pageSize && idx >= 0
-				})
-				if (value) {
-					data = []
-					RecordData.forEach(item => {
-						if (item.name.indexOf(value) !== -1) {
-							data.push(item)
-						}
-					})
-					total = data.length
-				}
-	
-				setTimeout(() => {
-					typeof success === 'function' &&
-						success({
-							data: data,
-							total: total
-						})
-						}, 500)
-			},
-			// 分页触发
-			change2(e) {
-				this.$refs.tableAll.clearSelection()
-				this.getData2(e.current)
-			},
-			// 搜索
-			search2() {
-				this.getData2(1, this.searchVal)
-			},// 获取数据
-			getData2(pageCurrent, value = '') {
-				this.pageCurrent2 = pageCurrent
-				this.request({
-					pageSize: this.pageSize2,
-					pageCurrent: pageCurrent,
-					value: value,
-					success: res => {
-						// console.log('data', res);
-						this.dataAll = res.data
-						this.total2 = res.total
-					}
-				})
 			},
 			showDetail(ite,index){
 				uni.showToast({
@@ -244,12 +232,63 @@
 				this.showComplete=false;
 			},cancelComplete(){
 				this.showComplete=false;
+			},open(ite,index){
+				uni.showToast({
+				  icon:'none',
+				  duration:500,
+				  title:'展开'
+				})
+				console.log(ite,index);
+				this.MaintainTask.comment=ite.comment;
+				this.MaintainTask.currentProgress=ite.currentProgress;
+				this.MaintainTask.endTime=ite.endTime;
+				this.MaintainTask.maintainOverview=ite.maintainOverview;
+				this.MaintainTask.maintainType=ite.maintainType;
+				this.MaintainTask.maintenancePersonnel=ite.maintenancePersonnel;
+				this.MaintainTask.pickupTime=ite.pickupTime;
+				this.MaintainTask.taskName=ite.taskName;
+				this.MaintainTask.maintenancePersonnel=ite.maintenancePersonnel;
+				this.showOpen=true;
+				// 切换展开状态
+			},confirmOpen(){
+				this.showOpen=false;
+			},handleClickAction(e){
+				this.showOpen=true;
+			},
+			pullUpLoadingAction(done){
+				if(this.dataSelf.length==RecordData.length){
+				  return
+				}
+				setTimeout(()=>{
+				  this.dataSelf.push(RecordData[this.dataSelf.length]);
+				  if(this.dataSelf.length==RecordData.length){
+					this.$refs.tableSelf.pullUpCompleteLoading('ok')
+				  }else {
+				    this.$refs.tableSelf.pullUpCompleteLoading()
+				  }
+				},1000)
+			},
+			pullUpLoadingAction2(done){
+				if(this.dataAll.length==RecordData.length){
+				  return
+				}
+				setTimeout(()=>{
+				  this.dataAll.push(RecordData[this.dataAll.length]);
+				  if(this.dataAll.length==RecordData.length){
+					this.$refs.tableAll.pullUpCompleteLoading('ok')
+				  }else {
+				    this.$refs.tableAll.pullUpCompleteLoading()
+				  }
+				},1000)
 			}
+			
 			
 		}
 	}
 </script>
 
 <style>
-
+.custom{
+	margin-left: 20px;
+}
 </style>

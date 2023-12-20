@@ -7797,10 +7797,7 @@ const pages = [
     path: "pages/MaintainProcedureRecord/MaintainProcedureRecord",
     style: {
       navigationBarTitleText: "维护过程记录",
-      enablePullDownRefresh: false,
-      usingComponents: {
-        "my-table": "/wxcomponents/table/table"
-      }
+      enablePullDownRefresh: false
     }
   }
 ];
@@ -7811,6 +7808,9 @@ const globalStyle = {
   backgroundColor: "#F8F8F8",
   "app-plus": {
     background: "#efeff4"
+  },
+  usingComponents: {
+    "my-table": "/wxcomponents/table/table"
   }
 };
 const tabBar = {
@@ -7826,6 +7826,12 @@ const tabBar = {
       iconPath: "static/过程记录.png",
       selectedIconPath: "static/过程记录.png",
       text: "维护过程记录"
+    },
+    {
+      pagePath: "pages/test/test",
+      iconPath: "static/过程记录.png",
+      selectedIconPath: "static/过程记录.png",
+      text: "test"
     }
   ]
 };

@@ -1,9 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "uni-th": "../../../uni-table/components/uni-th/uni-th",
-    "uni-tr": "../../../uni-table/components/uni-tr/uni-tr",
-    "uni-td": "../../../uni-table/components/uni-td/uni-td",
-    "uni-table": "../../../uni-table/components/uni-table/uni-table"
-  }
-}

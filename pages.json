@@ -32,22 +32,7 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "维护过程记录",
-				"enablePullDownRefresh" : false,
-				// #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
-				"usingComponents": {
-					"my-table": "/wxcomponents/table/table"
-				},
-				// #endif
-				// #ifdef MP-BAIDU
-				"usingComponents": {
-					"my-table": "/swancomponents/table/table"
-				},
-				// #endif
-				// #ifdef MP-ALIPAY
-				"usingComponents": {
-					"my-table": "/mycomponents/table/table"
-				}
-				// #endif
+				"enablePullDownRefresh" : false
 			}
 		}
 	],
@@ -58,7 +43,22 @@
 		"backgroundColor": "#F8F8F8",
 		"app-plus": {
 			"background": "#efeff4"
+		},
+		// #ifdef APP-PLUS || H5 || MP-WEIXIN || MP-QQ
+		"usingComponents": {
+			"my-table": "/wxcomponents/table/table"
+		},
+		// #endif
+		// #ifdef MP-BAIDU
+		"usingComponents": {
+			"my-table": "/swancomponents/table/table"
+		},
+		// #endif
+		// #ifdef MP-ALIPAY
+		"usingComponents": {
+			"my-table": "/mycomponents/table/table"
 		}
+		// #endif
 	},
 	"tabBar": {
 		"list": [
@@ -72,6 +72,11 @@
 				"iconPath": "static/过程记录.png",
 				"selectedIconPath": "static/过程记录.png",
 				"text": "维护过程记录"
+			},{
+				"pagePath": "pages/test/test",
+				"iconPath": "static/过程记录.png",
+				"selectedIconPath": "static/过程记录.png",
+				"text": "test"
 			}
 		]
 	}

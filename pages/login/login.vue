@@ -12,6 +12,7 @@
 		<button class="button" @click="submit" style="background-color: #2D8CF0;color: white;margin-top: 20rpx;">登录</button>
 	</view>
 </template>
+
 <script>
 export default {
 	data() {

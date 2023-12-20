@@ -9,13 +9,25 @@ const _sfc_main = {
       showAllDetail: false,
       showTransfer: false,
       showComplete: false,
+      showOpen: false,
+      num1: 0,
+      MaintainTask: {
+        taskName: "维护任务1",
+        maintenancePersonnel: "工程师A",
+        maintainType: "线上",
+        pickupTime: "2023-10-01",
+        endTime: "2023-11-01",
+        currentProgress: "任务待被领取",
+        maintainOverview: "设备常规检查",
+        comment: "按要求完成"
+      },
       column1: [
-        { name: "taskInfo", label: "维护任务", width: 100, fixed: true },
-        { name: "maintainType", label: "维护类型", width: 80 },
-        { name: "pickupTime", label: "领取时间", width: 100 },
-        { name: "endTime", label: "截止时间", width: 100 },
-        { name: "currentProgress", label: "截止时间", width: 150 },
-        { name: "maintainOverview", label: "维护概述", width: 150 },
+        { name: "taskName", label: "维护任务", width: 100, fixed: true },
+        // { name: 'maintainType', label: '维护类型',width:80},
+        // { name: 'pickupTime', label: '领取时间',width:100},
+        // { name: 'endTime', label: '截止时间',width:100},
+        // { name: 'currentProgress', label: '截止时间',width:150},
+        // { name: 'maintainOverview', label: '维护概述',width:150},
         { name: "operation", type: "operation", label: "操作", width: 220, renders: [
           {
             name: "转交",
@@ -34,32 +46,47 @@ const _sfc_main = {
             type: "primary",
             // type 为custom的时候自定义按钮
             func: "complete"
+          },
+          {
+            name: "展开",
+            type: "custom",
+            // type 为custom的时候自定义按钮
+            class: "custom",
+            func: "open"
           }
         ] }
       ],
-      thcolumn1: [
-        { key: "taskInfo", title: "维护任务", width: 100, fixed: true },
-        { key: "maintainType", title: "维护类型", width: 80 },
-        { key: "pickupTime", title: "领取时间", width: 100 },
-        { key: "endTime", title: "截止时间", width: 100 },
-        { key: "currentProgress", title: "截止时间", width: 150 },
-        { key: "maintainOverview", title: "维护概述", width: 150 },
-        { key: "operation", type: "operation", title: "操作", slot: "a" }
+      mycolumn1: [
+        { key: "taskName", title: "维护任务" },
+        { key: "maintainType", title: "维护类型" },
+        { key: "maintainOverview", title: "维护概述" }
+        // {
+        //     title: "操作",
+        //     key: "action",
+        //     type: "action"
+        // }
       ],
       column2: [
-        { name: "taskInfo", label: "维护任务", width: 80, fixed: true },
+        { name: "taskName", label: "维护任务", width: 80, fixed: true },
         { name: "maintenancePersonnel", label: "维护人员", width: 80, fixed: true },
-        { name: "maintainType", label: "维护类型", width: 80 },
-        { name: "pickupTime", label: "领取时间", width: 100 },
-        { name: "endTime", label: "截止时间", width: 100 },
-        { name: "currentProgress", label: "截止时间", width: 150 },
-        { name: "maintainOverview", label: "维护概述", width: 150 },
+        // { name: 'maintainType', label: '维护类型',width:80},
+        // { name: 'pickupTime', label: '领取时间',width:100},
+        // { name: 'endTime', label: '截止时间',width:100},
+        // { name: 'currentProgress', label: '截止时间',width:150},
+        // { name: 'maintainOverview', label: '维护概述',width:150},
         { name: "operation", type: "operation", label: "操作", width: 200, renders: [
           {
             name: "查看维护信息",
             type: "primary",
             func: "showDetail"
             // func 代表子元素点击的事件 父元素接收的事件 父元素 @edit
+          },
+          {
+            name: "展开",
+            type: "custom",
+            // type 为custom的时候自定义按钮
+            class: "custom",
+            func: "open"
           }
         ] }
       ],
@@ -100,94 +127,18 @@ const _sfc_main = {
       },
       dataSelf: [],
       dataAll: [],
-      pageSize: 9,
-      // 当前页
-      pageCurrent: 1,
-      // 数据总量
-      total: 0,
-      pageSize2: 9,
-      // 当前页
-      pageCurrent2: 1,
-      // 数据总量
-      total2: 0
+      showLoadMore: false,
+      loadMoreText: "上拉加载更多"
     };
   },
   onLoad() {
-    this.getData(1);
-    this.getData2(1);
+    this.dataSelf = pages_MaintainProcedureRecord_RecordData.RecordData.slice(0, 15);
+    this.dataAll = pages_MaintainProcedureRecord_RecordData.RecordData.slice(0, 15);
   },
   methods: {
     tabsClick(item) {
       this.tabsIndex = item.index;
       console.log(this.tabsIndex);
-    },
-    // 分页触发
-    change(e) {
-      this.$refs.tableSelf.clearSelection();
-      this.getData(e.current);
-    },
-    // 搜索
-    search() {
-      this.getData(1, this.searchVal);
-    },
-    // 获取数据
-    getData(pageCurrent, value = "") {
-      this.pageCurrent = pageCurrent;
-      this.request({
-        pageSize: this.pageSize,
-        pageCurrent,
-        value,
-        success: (res) => {
-          this.dataSelf = res.data;
-          this.total = res.total;
-        }
-      });
-    },
-    //伪request请求
-    request(options) {
-      const { pageSize, pageCurrent, success, value } = options;
-      let total = pages_MaintainProcedureRecord_RecordData.RecordData.length;
-      let data = pages_MaintainProcedureRecord_RecordData.RecordData.filter((item, index) => {
-        const idx = index - (pageCurrent - 1) * pageSize;
-        return idx < pageSize && idx >= 0;
-      });
-      if (value) {
-        data = [];
-        pages_MaintainProcedureRecord_RecordData.RecordData.forEach((item) => {
-          if (item.name.indexOf(value) !== -1) {
-            data.push(item);
-          }
-        });
-        total = data.length;
-      }
-      setTimeout(() => {
-        typeof success === "function" && success({
-          data,
-          total
-        });
-      }, 500);
-    },
-    // 分页触发
-    change2(e) {
-      this.$refs.tableAll.clearSelection();
-      this.getData2(e.current);
-    },
-    // 搜索
-    search2() {
-      this.getData2(1, this.searchVal);
-    },
-    // 获取数据
-    getData2(pageCurrent, value = "") {
-      this.pageCurrent2 = pageCurrent;
-      this.request({
-        pageSize: this.pageSize2,
-        pageCurrent,
-        value,
-        success: (res) => {
-          this.dataAll = res.data;
-          this.total2 = res.total;
-        }
-      });
     },
     showDetail(ite, index) {
       common_vendor.index.showToast({
@@ -238,28 +189,76 @@ const _sfc_main = {
     },
     cancelComplete() {
       this.showComplete = false;
+    },
+    open(ite, index) {
+      common_vendor.index.showToast({
+        icon: "none",
+        duration: 500,
+        title: "展开"
+      });
+      console.log(ite, index);
+      this.MaintainTask.comment = ite.comment;
+      this.MaintainTask.currentProgress = ite.currentProgress;
+      this.MaintainTask.endTime = ite.endTime;
+      this.MaintainTask.maintainOverview = ite.maintainOverview;
+      this.MaintainTask.maintainType = ite.maintainType;
+      this.MaintainTask.maintenancePersonnel = ite.maintenancePersonnel;
+      this.MaintainTask.pickupTime = ite.pickupTime;
+      this.MaintainTask.taskName = ite.taskName;
+      this.MaintainTask.maintenancePersonnel = ite.maintenancePersonnel;
+      this.showOpen = true;
+    },
+    confirmOpen() {
+      this.showOpen = false;
+    },
+    handleClickAction(e) {
+      this.showOpen = true;
+    },
+    pullUpLoadingAction(done) {
+      if (this.dataSelf.length == pages_MaintainProcedureRecord_RecordData.RecordData.length) {
+        return;
+      }
+      setTimeout(() => {
+        this.dataSelf.push(pages_MaintainProcedureRecord_RecordData.RecordData[this.dataSelf.length]);
+        if (this.dataSelf.length == pages_MaintainProcedureRecord_RecordData.RecordData.length) {
+          this.$refs.tableSelf.pullUpCompleteLoading("ok");
+        } else {
+          this.$refs.tableSelf.pullUpCompleteLoading();
+        }
+      }, 1e3);
+    },
+    pullUpLoadingAction2(done) {
+      if (this.dataAll.length == pages_MaintainProcedureRecord_RecordData.RecordData.length) {
+        return;
+      }
+      setTimeout(() => {
+        this.dataAll.push(pages_MaintainProcedureRecord_RecordData.RecordData[this.dataAll.length]);
+        if (this.dataAll.length == pages_MaintainProcedureRecord_RecordData.RecordData.length) {
+          this.$refs.tableAll.pullUpCompleteLoading("ok");
+        } else {
+          this.$refs.tableAll.pullUpCompleteLoading();
+        }
+      }, 1e3);
     }
   }
 };
 if (!Array) {
   const _easycom_u_tabs2 = common_vendor.resolveComponent("u-tabs");
   const _easycom_zb_table2 = common_vendor.resolveComponent("zb-table");
-  const _easycom_uni_pagination2 = common_vendor.resolveComponent("uni-pagination");
   const _easycom_u_modal2 = common_vendor.resolveComponent("u-modal");
   const _easycom_uni_easyinput2 = common_vendor.resolveComponent("uni-easyinput");
   const _easycom_uni_forms_item2 = common_vendor.resolveComponent("uni-forms-item");
   const _easycom_uni_forms2 = common_vendor.resolveComponent("uni-forms");
-  (_easycom_u_tabs2 + _easycom_zb_table2 + _easycom_uni_pagination2 + _easycom_u_modal2 + _easycom_uni_easyinput2 + _easycom_uni_forms_item2 + _easycom_uni_forms2)();
+  (_easycom_u_tabs2 + _easycom_zb_table2 + _easycom_u_modal2 + _easycom_uni_easyinput2 + _easycom_uni_forms_item2 + _easycom_uni_forms2)();
 }
 const _easycom_u_tabs = () => "../../uni_modules/uview-plus/components/u-tabs/u-tabs.js";
 const _easycom_zb_table = () => "../../uni_modules/zb-table/components/zb-table/zb-table.js";
-const _easycom_uni_pagination = () => "../../uni_modules/uni-pagination/components/uni-pagination/uni-pagination.js";
 const _easycom_u_modal = () => "../../uni_modules/uview-plus/components/u-modal/u-modal.js";
 const _easycom_uni_easyinput = () => "../../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput.js";
 const _easycom_uni_forms_item = () => "../../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item.js";
 const _easycom_uni_forms = () => "../../uni_modules/uni-forms/components/uni-forms/uni-forms.js";
 if (!Math) {
-  (_easycom_u_tabs + _easycom_zb_table + _easycom_uni_pagination + _easycom_u_modal + _easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms)();
+  (_easycom_u_tabs + _easycom_zb_table + _easycom_u_modal + _easycom_uni_easyinput + _easycom_uni_forms_item + _easycom_uni_forms)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
@@ -271,41 +270,32 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     d: common_vendor.o($options.trans),
     e: common_vendor.o($options.maintain),
     f: common_vendor.o($options.complete),
-    g: $data.tabsIndex === 0,
-    h: common_vendor.p({
+    g: common_vendor.o($options.open),
+    h: $data.tabsIndex === 0,
+    i: common_vendor.o($options.pullUpLoadingAction),
+    j: common_vendor.p({
       fit: true,
-      border: true,
       stripe: true,
       columns: $data.column1,
-      data: $data.dataSelf
+      data: $data.dataSelf,
+      isShowLoadMore: true
     }),
-    i: common_vendor.o($options.change),
-    j: $data.tabsIndex === 0,
-    k: common_vendor.p({
-      ["show-icon"]: true,
-      ["page-size"]: $data.pageSize,
-      current: $data.pageCurrent,
-      total: $data.total
-    }),
-    l: common_vendor.sr("tableAll", "38046e5a-3"),
+    k: $data.tabsIndex === 0,
+    l: common_vendor.sr("tableAll", "38046e5a-2"),
     m: common_vendor.o($options.showDetail),
-    n: $data.tabsIndex === 1,
-    o: common_vendor.p({
+    n: common_vendor.o($options.open),
+    o: $data.tabsIndex === 1,
+    p: common_vendor.o($options.pullUpLoadingAction2),
+    q: common_vendor.p({
       fit: true,
       border: true,
       stripe: true,
       columns: $data.column2,
-      data: $data.dataAll
+      data: $data.dataAll,
+      isShowLoadMore: true
     }),
-    p: common_vendor.o($options.change2),
-    q: $data.tabsIndex === 1,
-    r: common_vendor.p({
-      ["show-icon"]: true,
-      ["page-size"]: $data.pageSize2,
-      current: $data.pageCurrent2,
-      total: $data.total2
-    }),
-    s: common_vendor.sr("tableAllDetail", "38046e5a-6,38046e5a-5"),
+    r: $data.tabsIndex === 1,
+    s: common_vendor.sr("tableAllDetail", "38046e5a-4,38046e5a-3"),
     t: common_vendor.p({
       fit: true,
       border: true,
@@ -336,7 +326,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     C: common_vendor.p({
       label: "转交理由"
     }),
-    D: common_vendor.sr("form", "38046e5a-8,38046e5a-7"),
+    D: common_vendor.sr("form", "38046e5a-6,38046e5a-5"),
     E: common_vendor.p({
       modelValue: _ctx.tranferer,
       ["label-width"]: "100px"
@@ -354,6 +344,72 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       show: $data.showComplete,
       title: "完成维护项目",
       showCancelButton: "true"
+    }),
+    L: common_vendor.o(($event) => $data.MaintainTask.taskName = $event),
+    M: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.taskName
+    }),
+    N: common_vendor.p({
+      label: "维护任务"
+    }),
+    O: common_vendor.o(($event) => $data.MaintainTask.maintenancePersonnel = $event),
+    P: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.maintenancePersonnel
+    }),
+    Q: common_vendor.p({
+      label: "维护人员"
+    }),
+    R: common_vendor.o(($event) => $data.MaintainTask.maintainType = $event),
+    S: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.maintainType
+    }),
+    T: common_vendor.p({
+      label: "维护类型"
+    }),
+    U: common_vendor.o(($event) => $data.MaintainTask.pickupTime = $event),
+    V: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.pickupTime
+    }),
+    W: common_vendor.p({
+      label: "领取时间"
+    }),
+    X: common_vendor.o(($event) => $data.MaintainTask.endTime = $event),
+    Y: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.endTime
+    }),
+    Z: common_vendor.p({
+      label: "截止时间"
+    }),
+    aa: common_vendor.o(($event) => $data.MaintainTask.currentProgress = $event),
+    ab: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.currentProgress
+    }),
+    ac: common_vendor.p({
+      label: "当前进度"
+    }),
+    ad: common_vendor.o(($event) => $data.MaintainTask.maintainOverview = $event),
+    ae: common_vendor.p({
+      disabled: true,
+      modelValue: $data.MaintainTask.maintainOverview
+    }),
+    af: common_vendor.p({
+      label: "维护概述"
+    }),
+    ag: common_vendor.sr("form", "38046e5a-13,38046e5a-12"),
+    ah: common_vendor.p({
+      modelValue: $data.MaintainTask,
+      ["label-width"]: "100px"
+    }),
+    ai: common_vendor.o($options.confirmOpen),
+    aj: common_vendor.p({
+      show: $data.showOpen,
+      title: ""
     })
   };
 }

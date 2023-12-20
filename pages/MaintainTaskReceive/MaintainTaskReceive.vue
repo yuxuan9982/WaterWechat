@@ -22,14 +22,16 @@
 					</uni-td>
 				</uni-tr>
 			</uni-table > -->
-			<zb-table ref="table" :border="true" :stripe="true" :columns="column1" :data="tableData" @dele="dele" @edit="buttonEdit"></zb-table>
-			<view class="uni-pagination-box"><uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="total" @change="change" /></view>
+			<view style="height: 500px">
+			<zb-table ref="table"  :fit="true" :border="true" :stripe="true" :columns="column1" :data="tableData1" @dele="dele" @edit="buttonEdit"
+			:isShowLoadMore="true" @pullUpLoading="pullUpLoadingAction"></zb-table>
+			</view>
 		</view>
 	</uni-section>
 	<u-modal :show="showDetail" title="维护任务详情" @confirm="confirm1" width="700rpx">
 		<view class="uni-container">
 		<uni-forms ref="form" :modelValue="MaintainTask" label-width="100px">
-			<uni-forms-item label="维护任务" key="customerName">
+			<uni-forms-item label="维护任务">
 				<uni-easyinput disabled  v-model="MaintainTask.taskName" ></uni-easyinput>
 			</uni-forms-item>	
 			<uni-forms-item label="客户">
@@ -65,7 +67,7 @@
 			return {
 				expanded:false,
 				searchVal: '',
-				tableData: [],
+				tableData1: [],
 				// 每页数据量
 				pageSize: 10,
 				// 当前页
@@ -99,7 +101,8 @@
 				],
 				column1:[
 				    // { type:'index', width:60 },
-				    { name: 'taskName', label: '维护任务',width:150},
+				    { name: 'taskName', label: '维护任务',width:100},
+					{ name: 'customerName', label: '客户',width:120},
 				    { name: 'maintainType', label: '维护类型',width:100},
 					{ name: 'operation', type:'operation',label: '操作',width:100,renders:[
 						  {
@@ -119,7 +122,8 @@
 			}
 		},
 		onLoad() {
-			this.getData(1)
+			// this.getData(1)
+			this.tableData1=tableData.slice(0,15);
 		},
 		methods: {
 			// 分页触发
@@ -202,7 +206,19 @@
 				this.MaintainTask.maintainType=ite.maintainType;
 				this.MaintainTask.customerName=ite.customerName;
 				this.showDetail=true;
-			}
+			},pullUpLoadingAction(done){
+				if(this.tableData1.length==tableData.length){
+				  return
+				}
+				setTimeout(()=>{
+				  this.tableData1.push(tableData[this.tableData1.length]);
+				  if(this.tableData1.length==tableData.length){
+					this.$refs.table.pullUpCompleteLoading('ok')
+				  }else {
+				    this.$refs.table.pullUpCompleteLoading()
+				  }
+				},1000)
+			},
 		}
 	}
 </script>
