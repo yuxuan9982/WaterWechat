@@ -7808,9 +7808,6 @@ const globalStyle = {
   backgroundColor: "#F8F8F8",
   "app-plus": {
     background: "#efeff4"
-  },
-  usingComponents: {
-    "my-table": "/wxcomponents/table/table"
   }
 };
 const tabBar = {

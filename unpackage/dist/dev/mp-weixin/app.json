@@ -6,9 +6,6 @@
     "pages/test/test",
     "pages/MaintainProcedureRecord/MaintainProcedureRecord"
   ],
-  "usingComponents": {
-    "my-table": "/wxcomponents/table/table"
-  },
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
@@ -36,5 +33,6 @@
         "text": "test"
       }
     ]
-  }
+  },
+  "usingComponents": {}
 }
